@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        /* Responsive CSS Here */
+        @media screen and (max-width: 950px) {
+            .nav-img {
+                height: 25px;
+            }
+            .nav-option {
+                gap: 30px;
+            }
+            .nav-option h3 {
+                font-size: 15px;
+            }
+            .report-topic-heading,
+            .item1,
+            .items {
+                width: 800px;
+            }
+        }
+        
+        @media screen and (max-width: 850px) {
+            .nav-img {
+                height: 30px;
+            }
+            .nav-option {
+                gap: 30px;
+            }
+            .nav-option h3 {
+                font-size: 20px;
+            }
+            .report-topic-heading,
+            .item1,
+            .items {
+                width: 700px;
+            }
+            .navcontainer {
+                width: 100vw;
+                position: absolute;
+                transition: all 0.6s ease-in-out;
+                top: 0;
+                left: -100vw;
+            }
+            .nav {
+                width: 100%;
+                position: absolute;
+            }
+            .navclose {
+                left: 0;
+            }
+            .searchbar {
+                display: none;
+            }
+            .main {
+                padding: 40px 30px 30px 30px;
+            }
+            .searchbar2 {
+                width: 100%;
+                display: flex;
+                margin: 0 0 40px 0;
+                justify-content: center;
+            }
+            .searchbar2 input {
+                width: 250px;
+                height: 42px;
+                border-radius: 50px 0 0 50px;
+                background-color: var(--background-color3);
+                padding: 0 20px;
+                font-size: 15px;
+                border: 2px solid var(--secondary-color);
+            }
+        }
+        
+        @media screen and (max-width: 490px) {
+            .message {
+                display: none;
+            }
+            .logosec{
+                height: 70px;
+                width: 210px;
+            }
+            /* .logo {
+                font-size: 20px;
+            } */
+            .menuicn {
+                height: 25px;
+            }
+            .nav-img {
+                height: 25px;
+            }
+            .nav-option {
+                gap: 25px;
+            }
+            .nav-option h3 {
+                font-size: 12px;
+            }
+            .nav-upper-options {
+                gap: 15px;
+            }
+            .recent-Articles {
+                font-size: 20px;
+            }
+            .report-topic-heading,
+            .item1,
+            .items {
+                width: 550px;
+            }
+        }
+        
+        @media screen and (max-width: 400px) {
+            .recent-Articles {
+                font-size: 17px;
+            }
+            .view {
+                width: 60px;
+                font-size: 10px;
+                height: 27px;
+            }
+            .report-header {
+                height: 60px;
+                padding: 10px 10px 5px 10px;
+            }
+            .searchbtn img {
+                height: 20px;
+            }
+        }
+        
+        @media screen and (max-width: 320px) {
+            .recent-Articles {
+                font-size: 12px;
+            }
+            .view {
+                width: 50px;
+                font-size: 8px;
+                height: 27px;
+            }
+            .report-header {
+                height: 60px;
+                padding: 10px 5px 5px 5px;
+            }
+            .t-op {
+                font-size: 12px;
+            }
+            .t-op-nextlvl {
+                font-size: 10px;
+            }
+            .report-topic-heading,
+            .item1,
+            .items {
+                width: 300px;
+            }
+            .report-body {
+                padding: 10px;
+            }
+            .label-tag {
+                width: 70px;
+            }
+            .searchbtn {
+                width: 40px;
+            }
+            .searchbar2 input {
+                width: 180px;
+            }
+        }
+        
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        :root {
+            --background-color1: #fafaff;
+            --background-color2: #ffffff;
+            --background-color3: #ededed;
+            --background-color4: #cad7fda4;
+            --primary-color: #4b49ac;
+            --secondary-color: #0c007d;
+            --Border-color: #3f0097;
+            --one-use-color: #3f0097;
+            --two-use-color: #5500cb;
+        }
+        
+        body {
+            background-color: var(--background-color4);
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        hr {
+           border-color: #0522ff; /* Replace #ff5722 with the desired color */
+        }
+        
+        header {
+            height: 70px;
+            width: 100vw;
+            padding: 0 30px;
+            background: linear-gradient(45deg, #15283c, #ff5722);
+            /* background: #ff5722; */
+            /* background: #fdfdfd; */
+            /* background-color: #15283c; */
+            /* background-image: url("https://rare-gallery.com/thumbs/572396-abstract-gray.jpg"); */
+            /* background-image: url("https://img.freepik.com/free-photo/abstract-dark-blurred-background-smooth-gradient-texture-color-shiny-bright-website-pattern-banner-header-sidebar-graphic-art-image_1258-82927.jpg?w=740&t=st=1689759902~exp=1689760502~hmac=1452378a0b4a63d34cc010478126cd291cf56fa4b792781ba78b4b09cca9fa23"); */
+            /* background: linear-gradient(to right, rgb(241, 103, 103), blue);  */
+            position: fixed;
+            z-index: 100;
+            box-shadow: 1px 1px 15px rgba(161, 182, 253, 0.825);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* .logo {
+            font-size: 27px;
+            font-weight: 600;
+            color: rgb(47, 141, 70);
+        } */
+        
+        .dropdown-toggle {
+            border: none;
+            background-color: transparent;
+            color: #ffffff; /* Change this to your desired text color */
+            text-decoration: none;
+            padding: 0;
+        }
+
+        .dropdown-toggle:focus {
+        box-shadow: none;
+        }
+
+        .dropdown-menu {
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+        }
+
+        .dropdown-item {
+        padding: 5px 10px;
+        color: #ffffff; /* Change this to your desired text color */
+        text-decoration: none;
+        }
+
+        .dropdown-item:hover {
+        background-color: #f8f9fa; /* Change this to your desired background color on hover */
+        }
+
+        hr {
+           border-color: #d5ddde; /* Replace #ff5722 with the desired color */
+        }
+
+        .icn {
+            height: 30px;
+        }
+        .logo {
+            height:70px;
+        }
+        
+        .menuicn {
+            cursor: pointer;
+        }
+        
+        .searchbar{
+        display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* .logosec {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        } */
+        
+        .searchbar2 {
+            display: none;
+        }
+        
+        .logosec {
+            gap: 60px;
+        }
+        
+        .searchbar input {
+            width: 250px;
+            height: 42px;
+            border-radius: 50px 0 0 50px;
+            background-color: var(--background-color3);
+            padding: 0 20px;
+            font-size: 15px;
+            outline: none;
+            border: none;
+        }
+        
+        .searchbtn {
+            width: 50px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0px 50px 50px 0px;
+            background-color: var(--secondary-color);
+            cursor: pointer;
+        }
+        
+        .message {
+            gap: 40px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .circle {
+            height: 7px;
+            width: 7px;
+            position: absolute;
+            background-color: #fa7bb4;
+            border-radius: 50%;
+            left: 19px;
+            top: 8px;
+        }
+
+         .dp {
+            height: 40px;
+            width: 40px;
+            background-color: #626262;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+         } 
+        
+        .main-container {
+            display: flex;
+            width: 100vw;
+            position: relative;
+            top: 70px;
+            z-index: 1;
+        }
+        
+        .dpicn {
+            height: 42px;
+        }
+        
+        .main {
+            height: calc(100vh - 70px);
+            width: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            padding: 40px 30px 30px 30px;
+        }
+        
+        .main::-webkit-scrollbar-thumb {
+            background-image: linear-gradient(to bottom, rgb(0, 0, 85), rgb(0, 0, 50));
+        }
+        
+        .main::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .main::-webkit-scrollbar-track {
+            background-color: #9e9e9eb2;
+        }
+        
+        .box-container {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+        
+        .nav {
+            min-height: 100vh;
+            width: 250px;
+            background-color: #15283c;
+            color: #fff; 
+            background-image: url('C:\Users\Pathbreaker-10\Documents\invoice_env\invoice_env\invoice_project\invoice_app\image\pattern_h.png');
+            /* background-image: url("https://img.freepik.com/free-photo/abstract-dark-blurred-background-smooth-gradient-texture-color-shiny-bright-website-pattern-banner-header-sidebar-graphic-art-image_1258-82927.jpg?w=740&t=st=1689759902~exp=1689760502~hmac=1452378a0b4a63d34cc010478126cd291cf56fa4b792781ba78b4b09cca9fa23");  */
+            position: absolute;
+            top: 0px;
+            left: 0;
+            box-shadow: 1px 1px 10px rgba(198, 189, 248, 0.825);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            padding: 30px 0 20px 10px;
+            /* background-image: url("https://rare-gallery.com/thumbs/572396-abstract-gray.jpg") */
+        }
+        
+        .navcontainer {
+            height: calc(100vh - 70px);
+            width: 250px;
+            position: relative;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .navcontainer::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .navclose {
+            width: 80px;
+        }
+        
+        .nav-option {
+            width: 250px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 30px 0 20px;
+            gap: 20px;
+            transition: all 0.1s ease-in-out;
+        }
+        
+        .nav-option:hover {
+            border-left: 5px solid #a2a2a2;
+            background-color: #dadada;
+            cursor: pointer;
+        }
+        
+        .nav-img {
+            height: 30px;
+        }
+        
+        .nav-upper-options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        /* .option1 {
+            border-left: 5px solid #010058af;
+            background-color: var(--Border-color);
+            color: white;
+            cursor: pointer;
+        } */
+        
+        .option1:hover {
+            border-left: 5px solid #010058af;
+            background-color: var(--Border-color);
+        }
+        .container {
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f2f2f2;
+        width: 70%;
+        border-radius: 10px;
+        border-top-right-radius: 40px;
+        box-shadow: 
+            0px 2px 10px rgba(0,0,0,0.2), 
+            0px 10px 20px rgba(0,0,0,0.3), 
+            0px 30px 60px 1px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+        text-align: center;
+        }
+
+        .form-group {
+        margin-bottom: 10px;
+        }
+
+        label {
+        display: block;
+        font-weight: bold;
+        font-size: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        }
+
+        input[type="submit"] {
+        width: 10%;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #0f0bfa;
+        color: white;
+        border: none;
+        cursor: pointer;
+        }
+
+        .btn-submit:hover {
+        background-color: #01c8f5;
+        }
+        .form_heading{
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+        }
+  </style>
+</head>
+<body>
+  <header>
+
+    <div class="logosec">
+        <!-- <div class="logo"></div> -->
+        <img src="https://pathbreakertech.com/uploads/settings/general_settings_1675415847_112573057.png"class="logo"  alt="LOGO">
+            <!-- class="icn menuicn"
+            id="menuicn"
+            alt="menu-icon"> -->
+    </div>
+
+    <!-- <div class="searchbar">
+        <input type="text"
+            placeholder="Search">
+        <div class="searchbtn">
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
+                class="icn srchicn"
+                alt="search-icon">
+        </div>
+    </div> -->
+
+    <div class="message">
+        <div class="dp">
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                class="dpicn"
+                alt="dp">
+        </div>
+    </div>
+
+</header>
+</body>
+
+<div class="main-container">
+  <div class="navcontainer">
+      <nav class="nav">
+          <div class="nav-upper-options">
+              <div class="nav-option option1">
+                <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+                      class="nav-img"
+                      alt="dashboard"> -->
+                    <i class="fa-solid fa-house" class="nav-img"></i>
+                    <a href="/dashboard">HOME</a>
+              </div>
+              <div class="nav-option option2">
+                  <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183323/10.png" class="nav-img" alt="articles"> -->
+                  <i class="fa-solid fa-users" class="nav-img"></i>
+                  <button class="btn  dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Customers
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/coustmer">Create Customer</a>
+                    <a class="dropdown-item" href="/viewcoustmer">View Customer</a> 
+                  </div>
+              </div>
+              
+              <div class="nav-option option3">
+                  <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png" class="nav-img" alt="articles"> -->
+                  <i class="fa-solid fa-file-invoice-dollar" class="nav-img"></i>
+                  <button class="btn  dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Invoice
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/createinvoice">Create Invoice</a>
+                    <a class="dropdown-item" href="/viewinvoice">View Invoice</a>
+                  </div>
+              </div>
+
+              <div class="nav-option option4">
+                  <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png" class="nav-img" alt="articles"> -->
+                  <i class="fa-brands fa-product-hunt" class="nav-img"></i>
+                  <button class="btn  dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Products
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/addproduct">Create Products</a>
+                    <a class="dropdown-item" href="/viewproduct">View Products</a>
+                  </div>
+              </div>
+
+              <div class="nav-option option5">
+                  <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/6.png" class="nav-img" alt="articles"> -->
+                  <i class="fa-solid fa-building-columns" class="nav-img"></i>
+                  <button class="btn  dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Accounts
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <!-- <a class="dropdown-item" href="#">Statments</a> -->
+                    <a class="dropdown-item" href="/viewInwardpayments">Veiw Inward Payments</a>
+                    <a class="dropdown-item" href="/addinwardpayments">Add Inward Payments</a>   
+                  </div>
+              </div>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+          </div>
+      </nav>
+  </div>
+  <div class="main">
+
+      <div class="searchbar2">
+          <input type="text"
+              name=""
+              id=""
+              placeholder="Search">
+          <div class="searchbtn">
+              <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
+                  class="icn srchicn"
+                  alt="search-button">
+          </div>
+      </div>
+      <div class="box-container">
+        <body>
+          <div class="container">
+            <h2 class="form_heading">ADD INWARD PAYMENTS</h2>
+            <hr/>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="client">customer name</label>
+                    <input type="text" id="client" name="client" required>
+                </div>
+            
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="text" id="amount" name="amount" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="text" id="date" name="date" required>
+                    <!-- <input type="date" id="date" name="date" required> -->
+                </div>
+
+                <div class="d-flex flex-row justify-content-center">
+                    <input type="submit" value="Add" class="btn-submit">
+                </div>
+
+            </form>
+          </div>
+        </body>
+      </div>
+
+  </div>
+
+  </div>
+</div>
+<!-- <script src="script.js"></script> -->
+</html>
+

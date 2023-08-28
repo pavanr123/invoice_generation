@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - PATHBRAKER IT Solutions Pvt Ltd</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            font-size: 12px;
+        }
+        
+        .logo-img {
+            width: 200px;
+        }
+
+        img.p-1.img.d-inline-block.aligin-top {
+            width: 200px;
+        }
+        .container {
+            max-width: 100%;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .invoice-details {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .company-address {
+            max-width: 500px;
+        }
+
+        .invoice-table {
+            margin-top: 15px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .invoice-table th, .invoice-table td {
+            border: 1px solid #ccc;
+            padding: 12px;
+        }
+
+        .total {
+            text-align: right;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .neft-table {
+            margin-top: 15px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .neft-table th, .neft-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.2;
+            z-index: 9999;
+            height: 40%;
+            width: 100%;
+        }
+        .print-button {
+            display: block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="watermark" src="https://pathbreakertech.com/uploads/settings/general_settings_1675415847_112573057.png" alt="Logo Watermark">
+        <div class="d-flex flex-row justify-content-between">
+        <img src="https://pathbreakertech.com/uploads/settings/general_settings_1675415847_112573057.png" class=" p-1 img d-inline-block aligin-top" alt="LOGO">
+        <h1 style="text-decoration: underline;">INVOICE</h1>
+        </div>
+        <div class="invoice-details">
+            <div class="company-address">
+                <h5>TO</h5>
+                <p>{{customer}},<br/>
+                {{address}},<br/>
+                {{state}} - {{state_code}}, India.<br/>
+                Email: {{mail_id}},<br/>
+                Phone: {{mobile_number}},<br/>
+                GST NO: {{cos_gst_number}}</p>
+            </div>
+            <div class="company-address">
+                <p>Invoice no: {{invoice_no}}<br/>
+                Date: {{invoice_date}}<br/></p>
+            </div>
+        </div>
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>HSN CODE</th>
+                    <th>Product Details</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Amount (INR)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inv in productdetails %}
+                <tr>
+                    <td>{{inv.count}}</td>
+                    <td>{{inv.purchase_id}}</td>
+                    <td>{{inv.product_name}}</td>
+                    <td>{{inv.no_of_units_allowed}}</td>
+                    <td>{{inv.cost_per_unit}}</td>
+                    <td>{{inv.amount}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="5" class="total">CGST</td>
+                    <td>{{cgst}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="total">SGST</td>
+                    <td>{{sgst}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="total">IGST</td>
+                    <td>{{igst}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="total">Total amount including GST</td>
+                    <td>{{total}}</td>
+                </tr>
+        <table class="neft-table">
+        <tr>
+            <tr>
+                <h4>NEFT Information</h4>
+            </tr>
+            <tr>
+                <td>Bank Name:</td>
+                <td>{{bank_name}}</td>
+            </tr>
+            <tr>
+                <td>PAN NO:</td>
+                <td>{{pan_number}}</td>
+            </tr>
+            <tr>
+                <td>Account No.:</td>
+                <td>{{account_number}}</td>
+            </tr>
+            <tr>
+                <td>GST NO:</td>
+                <td>{{gst_number}}</td>
+            </tr>
+            <tr>
+                <td>IFSC Code:</td>
+                <td>{{ifsc_code}}</td>
+            </tr>
+            <!-- <tr>
+                <td>Bank Address:</td>
+                <td>Stone Ridge Center, Opp. Google, Bank Address: Main Road, Kondapur, Hyderabad 500033, Telangana.</td>
+            </tr> -->
+        </table>
+        <div>
+            <h4>For PATHBRAKER IT TECHNOLOGIE PVD LTD</h4>
+           <!-- <img src="https://pathbreakertech.com/uploads/settings/general_settings_1675415847_112573057.png" class=" p-1 img d-inline-block aligin-top" alt="LOGO"> -->
+           <h3>Authorized Signature</h3>
+           <h3>Place:Hyderbad</h3>
+        </div>
+        </div>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex flex-row justify-content-end">
+        <button class="print-button" id="print">Print</button>
+    </div>
+    <!-- <script>
+        function printPage() {
+            window.print();
+
+        }
+    </script> -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $("#print").click(function(event){
+        event.stopPropagation();
+        document.getElementById("print").style.display="none"
+        window.print()
+        document.getElementById("print").style.display="block"
+        }); 
+    </script>
+</body>
+</html>
