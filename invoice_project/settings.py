@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-zx!=99#z2c5gr@twf1_)hhyyz_*$ukq+__=r!q!h12g1#esvwu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -87,11 +87,11 @@ WSGI_APPLICATION = 'invoice_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'invoices', #database name
-        'USER': 'postgres',
-        'PASSWORD': 'usman@123',
-        'HOST': 'localhost',
-        'PORT': '5432',  
+        'NAME': 'invoice', #database name
+        'USER': 'invoice',
+        'PASSWORD': 'Invoice@!23',
+        'HOST': '192.168.1.163',
+        'PORT': '5433',  
     }
 }
 
@@ -137,10 +137,10 @@ USE_TZ = True
 #     os.path.join(BASE_DIR, 'static'),
 # ]
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 
 # Default primary key field type

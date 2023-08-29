@@ -1,4 +1,4 @@
-from asyncio.windows_events import NULL
+#from asyncio.windows_events import NULL
 from queue import Empty
 from unittest import result
 from django.shortcuts import render,redirect,HttpResponse
@@ -18,8 +18,15 @@ def login(request):
 
 
 def otp(request):
+    db_email = "usmanbashap@pathbreakertech.com"
+    db_password = "Invoice@!23"
     if request.method == 'POST':
         email = request.POST['email']
+        password = request.POST['password']
+        if email != db_email:
+            return HttpResponse("invalid email")
+        if password != db_password:
+            return HttpResponse("invalid password")
         otp = str(random.randint(100000, 999999))
         try:
             send_mail(
