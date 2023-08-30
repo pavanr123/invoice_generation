@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="responsive.css"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
         /* Responsive CSS Here */
@@ -509,6 +509,15 @@
             font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
         }
+        .name_user {
+            margin-left: 5px;
+        }
+        .user_profile_dd img {
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%; 
+            margin-right: 10px;
+        }
   </style>
 </head>
 <body>
@@ -521,24 +530,28 @@
             id="menuicn"
             alt="menu-icon"> -->
     </div>
-
-    <!-- <div class="searchbar">
-        <input type="text"
-            placeholder="Search">
-        <div class="searchbtn">
-            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-                class="icn srchicn"
-                alt="search-icon">
+    <div class="user_profile_dd">
+        <div>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png">
+                <!-- <span class="name_user"></span> -->
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/editadmin">My Profile</a>
+                <a class="dropdown-item" href="/login">
+                    <span>Log Out</span>
+                    <i class="fa fa-sign-out"></i>
+                </a>
+            </div>
         </div>
-    </div> -->
-
-    <div class="message">
+    </div>
+    <!-- <div class="message">
         <div class="dp">
             <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
                 class="dpicn"
                 alt="dp">
         </div>
-    </div>
+    </div> -->
 
 </header>
 </body>

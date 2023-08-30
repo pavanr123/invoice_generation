@@ -515,7 +515,12 @@
         font-family: 'Times New Roman', Times, serif;
         font-weight: bold;
     }
-
+    .user_profile_dd img {
+        width: 40px; 
+        height: 40px; 
+        border-radius: 50%; 
+        margin-right: 10px;
+    }
   </style>
 </head>
 <body>
@@ -528,25 +533,21 @@
             id="menuicn"
             alt="menu-icon"> -->
     </div>
-
-    <!-- <div class="searchbar">
-        <input type="text"
-            placeholder="Search">
-        <div class="searchbtn">
-            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-                class="icn srchicn"
-                alt="search-icon">
-        </div>
-    </div> -->
-
-    <div class="message">
-        <div class="dp">
-            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
-                class="dpicn"
-                alt="dp">
+    <div class="user_profile_dd">
+        <div>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png">
+                <!-- <span class="name_user"></span> -->
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/editadmin">My Profile</a>
+                <a class="dropdown-item" href="/login">
+                    <span>Log Out</span>
+                    <i class="fa fa-sign-out"></i>
+                </a>
+            </div>
         </div>
     </div>
-
 </header>
 </body>
 
@@ -650,7 +651,7 @@
             <form method="post">
               {% csrf_token %}
               <div class="form-group">
-                <label for="client">customer:</label>
+                <label for="client">Customer:</label>
                 <input type="text" id="client" name="client" required>
               </div>
               <div class="form-group">

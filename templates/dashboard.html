@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pathbreakers</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <title>Bootstrap Example</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
@@ -1472,10 +1470,10 @@
             margin-left: 5px;
         }
         .user_profile_dd img {
-            width: 40px; /* Set the width of the image */
-            height: 40px; /* Set the height of the image */
-            border-radius: 50%; /* Make the image rounded (assuming it's a circular profile picture) */
-            margin-right: 10px; /* Add some right margin for spacing between the image and the username */
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%; 
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -1483,7 +1481,6 @@
 
     <!-- for header part -->
     <header>
-
         <div class="logosec">
             <!-- <div class="logo"></div> -->
             <img src="https://pathbreakertech.com/uploads/settings/general_settings_1675415847_112573057.png"class="logo"  alt="LOGO">
@@ -1491,34 +1488,21 @@
                 id="menuicn"
                 alt="menu-icon"> -->
         </div>
-
-        <div class="searchbar">
-            <input type="text"
-                placeholder="Search">
-            <div class="searchbtn">
-                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-                    class="icn srchicn"
-                    alt="search-icon">
-            </div>
-        </div>
-        <ul class="user_profile_dd">
-            <li>
+        <div class="user_profile_dd">
+            <div>
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png">
                     <!-- <span class="name_user"></span> -->
                 </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="/editadmin">My Profile</a>
-                    <!-- <a class="dropdown-item" href="#">Help</a> -->
                     <a class="dropdown-item" href="/login">
                         <span>Log Out</span>
                         <i class="fa fa-sign-out"></i>
                     </a>
                 </div>
-            </li>
-        </ul>
+            </div>
         </div>
-
     </header>
 
     <div class="main-container">
@@ -1619,186 +1603,8 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="report-container">
-            <div class="report-body"> -->
-            <hr/>
-            <div class="row column1">
-                <div class="col-md-6 col-lg-3">
-                   <div class="full counter_section margin_bottom_30">
-                      <div class="couter_icon">
-                         <div> 
-                            <i class="fa fa-user yellow_color"></i>
-                         </div>
-                      </div>
-                      <div class="counter_no">
-                         <div>
-                            <p class="total_no">2500</p>
-                            <p class="head_couter">Welcome</p>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                   <div class="full counter_section margin_bottom_30">
-                      <div class="couter_icon">
-                         <div> 
-                            <i class="fa fa-clock-o blue1_color"></i>
-                         </div>
-                      </div>
-                      <div class="counter_no">
-                         <div>
-                            <p class="total_no">123.50</p>
-                            <p class="head_couter">Average Time</p>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                   <div class="full counter_section margin_bottom_30">
-                      <div class="couter_icon">
-                         <div> 
-                            <i class="fa fa-cloud-download green_color"></i>
-                         </div>
-                      </div>
-                      <div class="counter_no">
-                         <div>
-                            <p class="total_no">1,805</p>
-                            <p class="head_couter">Collections</p>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                   <div class="full counter_section margin_bottom_30">
-                      <div class="couter_icon">
-                         <div> 
-                            <i class="fa fa-comments-o red_color"></i>
-                         </div>
-                      </div>
-                      <div class="counter_no">
-                         <div>
-                            <p class="total_no">54</p>
-                            <p class="head_couter">Comments</p>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-             </div>
-             <div class="row column1 social_media_section">
-                <div class="col-md-6 col-lg-3">
-                   <div class="full socile_icons fb margin_bottom_30">
-                      <div class="social_icon">
-                         <!-- <i class="fa fa-facebook"></i> -->
-                         <i class="fa-brands fa-facebook"></i>
-                      </div>
-                      <div class="social_cont">
-                         <ul>
-                            <li>
-                               <span><strong>35k</strong></span>
-                               <span>Friends</span>
-                            </li>
-                            <li>
-                               <span><strong>128</strong></span>
-                               <span>Feeds</span>
-                            </li>
-                         </ul>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                   <div class="full socile_icons tw margin_bottom_30">
-                      <div class="social_icon">
-                         <!-- <i class="fa fa-twitter"></i> -->
-                         <i class="fa-brands fa-twitter"></i>
-                      </div>
-                      <div class="social_cont">
-                         <ul>
-                            <li>
-                               <span><strong>584k</strong></span>
-                               <span>Followers</span>
-                            </li>
-                            <li>
-                               <span><strong>978</strong></span>
-                               <span>Tweets</span>
-                            </li>
-                         </ul>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                   <div class="full socile_icons linked margin_bottom_30">
-                      <div class="social_icon">
-                         <!-- <i class="fa fa-linkedin"></i> -->
-                         <i class="fa-brands fa-linkedin"></i>
-                      </div>
-                      <div class="social_cont">
-                         <ul>
-                            <li>
-                               <span><strong>758+</strong></span>
-                               <span>Contacts</span>
-                            </li>
-                            <li>
-                               <span><strong>365</strong></span>
-                               <span>Feeds</span>
-                            </li>
-                         </ul>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                   <div class="full socile_icons google_p margin_bottom_30">
-                      <div class="social_icon">
-                         <!-- <i class="fa fa-google-plus"></i> -->
-                         <i class="fa-solid fa-envelope"></i>
-                      </div>
-                      <div class="social_cont">
-                         <ul>
-                            <li>
-                               <span><strong>450</strong></span>
-                               <span>Followers</span>
-                            </li>
-                            <li>
-                               <span><strong>57</strong></span>
-                               <span>Circles</span>
-                            </li>
-                         </ul>
-                      </div>
-                   </div>
-                </div>
-             </div>
-            </div>
         </div>
     </div>
-    <!-- <script>
-        // JavaScript to update the count value
-        const countElement = document.querySelector('.count');
-        let count = 0;
-        function updateCount() {
-            countElement.textContent = count;
-        }
-        // Example: Increment the count every second (for demonstration purposes)
-        const a = setInterval(() => {
-            count++;
-            updateCount();
-            if (count > 10){
-                clearInterval(a)
-            }
-        },100);
-        const countElements = document.querySelector('.counts');
-        let counts = 0;
-        function updateCounts() {
-            countElements.textContent = counts;
-        }
-        // Example: Increment the count every second (for demonstration purposes)
-        const b = setInterval(() => {
-            counts++;
-            updateCounts();
-            if (counts > 10){
-                clearInterval(b)
-            }
-        },100);
-    </script> -->
-    <!-- <script src="script.js"></script> -->
 </body>
 </html>
 
