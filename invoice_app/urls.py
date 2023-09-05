@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import otp , login , dashboard, addcoustmer, viewcoustmer, addProduct,viewProduct,editProduct,updateProduct,deleteProduct,addInwardPayments,viewInwardpayments,adminprofile,editadmin,createinvoice,viewinvoice,invoiceslip
-from .views import editInvoice,updateInvoice,deleteInvoice,deleteadmin,updateadmin,productdetails
+from .views import editInvoice,updateInvoice,deleteInvoice,deleteadmin,updateadmin,productdetails,AddUser,ViewUser,DeleteUser
 
 urlpatterns = [
     path("otp" ,otp, name='otp'),
@@ -26,4 +26,7 @@ urlpatterns = [
     path('deleteinvoice/<int:id>',deleteInvoice, name='deleteInvoice'),
     path('invoiceslip/<int:id>',invoiceslip, name='invoiceslip'),
     path('productdetails',productdetails, name='productdetails'),
+    path('AddUser',AddUser,name="AddUser"),
+    path('ViewUser',ViewUser,name="ViewUser"),
+    path('DeleteUser/<int:id>',DeleteUser,name="DeleteUser"),
 ]
