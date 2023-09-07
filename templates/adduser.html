@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pathbreakers</title>
-    <!-- <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="responsive.css"> -->
-    <title>Bootstrap Example</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -79,61 +75,61 @@
                 font-size: 15px;
                 border: 2px solid var(--secondary-color);
             }
-            }
+        }
         
-            @media screen and (max-width: 490px) {
-                .message {
-                    display: none;
-                }
-                .logosec{
-                    height: 70px;
-                    width: 210px;
-                }
-                /* .logo {
-                    font-size: 20px;
-                } */
-                .menuicn {
-                    height: 25px;
-                }
-                .nav-img {
-                    height: 25px;
-                }
-                .nav-option {
-                    gap: 25px;
-                }
-                .nav-option h3 {
-                    font-size: 12px;
-                }
-                .nav-upper-options {
-                    gap: 15px;
-                }
-                .recent-Articles {
-                    font-size: 20px;
-                }
-                .report-topic-heading,
-                .item1,
-                .items {
-                    width: 550px;
-                }
+        @media screen and (max-width: 490px) {
+            .message {
+                display: none;
             }
+            .logosec{
+                height: 70px;
+                width: 210px;
+            }
+            /* .logo {
+                font-size: 20px;
+            } */
+            .menuicn {
+                height: 25px;
+            }
+            .nav-img {
+                height: 25px;
+            }
+            .nav-option {
+                gap: 25px;
+            }
+            .nav-option h3 {
+                font-size: 12px;
+            }
+            .nav-upper-options {
+                gap: 15px;
+            }
+            .recent-Articles {
+                font-size: 20px;
+            }
+            .report-topic-heading,
+            .item1,
+            .items {
+                width: 550px;
+            }
+        }
         
-            @media screen and (max-width: 400px) {
-                .recent-Articles {
-                    font-size: 17px;
-                }
-                .view {
-                    width: 60px;
-                    font-size: 10px;
-                    height: 27px;
-                }
-                .report-header {
-                    height: 60px;
-                    padding: 10px 10px 5px 10px;
-                }
-                .searchbtn img {
-                    height: 20px;
-                }
+        @media screen and (max-width: 400px) {
+            .recent-Articles {
+                font-size: 17px;
             }
+            .view {
+                width: 60px;
+                font-size: 10px;
+                height: 27px;
+            }
+            .report-header {
+                height: 60px;
+                padding: 10px 10px 5px 10px;
+            }
+            .searchbtn img {
+                height: 20px;
+            }
+        }
         
         @media screen and (max-width: 320px) {
             .recent-Articles {
@@ -199,6 +195,10 @@
             max-width: 100%;
             overflow-x: hidden;
         }
+
+        hr {
+           border-color: #0522ff; /* Replace #ff5722 with the desired color */
+        }
         
         header {
             height: 70px;
@@ -218,15 +218,13 @@
             font-weight: 600;
             color: rgb(47, 141, 70);
         } */
-
-
+        
         .dropdown-toggle {
             border: none;
-            background-color: transparent !important;
+            background-color: transparent;
             color: #ffffff; /* Change this to your desired text color */
             text-decoration: none;
             padding: 0;
-            border: none;
         }
 
         .dropdown-toggle:focus {
@@ -248,12 +246,16 @@
         .dropdown-item:hover {
         background-color: #f8f9fa; /* Change this to your desired background color on hover */
         }
-        
+
+        hr {
+           border-color: #d5ddde; /* Replace #ff5722 with the desired color */
+        }
+
         .icn {
             height: 30px;
         }
         .logo {
-            height:70px;
+            height:60px;
         }
         
         .menuicn {
@@ -331,7 +333,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-        }
+         } 
         
         .main-container {
             display: flex;
@@ -372,7 +374,7 @@
             flex-wrap: wrap;
             gap: 50px;
         }
-        
+
         .nav {
             min-height: 100vh;
             width: 250px;
@@ -447,104 +449,109 @@
             border-left: 5px solid #010058af;
             background-color: var(--Border-color);
         }
+    .container {
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f2f2f2;
+      width: 70%;
+      border-radius: 10px;
+      border-top-right-radius: 40px;
+      box-shadow: 
+        0px 2px 10px rgba(0,0,0,0.2), 
+        0px 10px 20px rgba(0,0,0,0.3), 
+        0px 30px 60px 1px rgba(0,0,0,0.5);
+    }
 
-        .container {
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f2f2f2;
-            width: 80%;
-            border-radius: 10px;
-            border-top-right-radius: 40px;
-            box-shadow: 
-                0px 2px 10px rgba(0,0,0,0.2), 
-                0px 10px 20px rgba(0,0,0,0.3), 
-                0px 30px 60px 1px rgba(0,0,0,0.5);
-        }
+    h2 {
+      text-align: center;
+    }
 
-        h2 {
-            text-align: center;
-        }
+    .form-group {
+      margin-bottom: 10px;
+    }
 
-        .form-group {
-            margin-bottom: 10px;
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="submit"] {
+      width: 10%;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #0f0bfa;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-submit:hover {
+      background-color: #01c8f5;
+    }
+    
+    .d-flex {
+    display: flex; /* Display the elements as flex items */
+    }
+
+    .flex-row {
+        flex-direction: row; /* Arrange the items in a row (side by side) */
+    }
+
+    .justify-content-around {
+        justify-content: space-around; /* Space the elements evenly along the main axis */
+    }
+
+    .form-group {
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
             font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        input[type="text"],
-        input[type="email"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
+        input[type="text"], input[type="email"], select, input[type="password"] {
             width: 100%;
             padding: 10px;
-            background-color: #0f0bfa;
-            color: white;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        select {
+            height: 40px;
+        }
+
+        /* input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
             border: none;
+            padding: 10px 20px;
             cursor: pointer;
         }
 
-        .btn-submit:hover {
-            background-color: #45a049;
-        }
-        
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        .custom-icon {
-          color: rgb(240, 9, 9);
-          font-size: 20px;
-          margin: 10px;
-        }
-        .search-container {
-            display: flex;
-            align-items: center;
-            margin: 10px;
-        }
-
-        input[type="text"] {
-            padding: 7px;
-            font-size: 16px;
-            width: 20%;
-        }
-
-        button {
-            padding: 7px 12px;
-            font-size: 16px;
-            background-color: #ff1900;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        #searchResults {
-         margin: 20px;
-        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        } */
         .form_heading{
             font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
         }
-    </style>
+        .para{
+            text-align: center;
+            color: red;
+        }
+  </style>
 </head>
 <body>
   <header>
@@ -556,8 +563,8 @@
             id="menuicn"
             alt="menu-icon"> -->
     </div>
-<!-- 
-    <div class="searchbar">
+
+    <!-- <div class="searchbar">
         <input type="text"
             placeholder="Search">
         <div class="searchbtn">
@@ -576,35 +583,36 @@
     </div>
 
 </header>
+</body>
 
 <div class="main-container">
   <div class="navcontainer">
       <nav class="nav">
           <div class="nav-upper-options">
               <div class="nav-option option1">
-                  <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+                <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
                       class="nav-img"
                       alt="dashboard"> -->
                       <i class="fa-solid fa-house" class="nav-img"></i>
-                      <a href="/dashboard"> HOME </a>
+                      <a href="/dashboard">Dashboard</a>
               </div>
               <div class="nav-option option2">
-                    <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183323/10.png" class="nav-img" alt="articles"> -->
-                    <i class="fa-solid fa-users" class="nav-img"></i>
-                  <button class="btn  dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    customers
+                  <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183323/10.png" class="nav-img" alt="articles"> -->
+                  <i class="fa-solid fa-users" class="nav-img"></i>
+                  <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  customers
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/coustmer">Create customer</a>
-                    <a class="dropdown-item" href="/viewcoustmer">View customer</a>
+                    <a class="dropdown-item" href="/viewcoustmer">View customer</a> 
                   </div>
-                </div>
+              </div>
               
               <div class="nav-option option3">
-                    <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png" class="nav-img" alt="articles"> -->
-                    <i class="fa-solid fa-file-invoice-dollar" class="nav-img"></i>
-                  <button class="btn  dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Invoice
+                  <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png" class="nav-img" alt="articles"> -->
+                  <i class="fa-solid fa-file-invoice-dollar" class="nav-img"></i>
+                  <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Invoice
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/createinvoice">Create Invoice</a>
@@ -615,7 +623,7 @@
               <div class="nav-option option4">
                   <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png" class="nav-img" alt="articles"> -->
                   <i class="fa-brands fa-product-hunt" class="nav-img"></i>
-                  <button class="btn  dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Products
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -627,26 +635,25 @@
               <div class="nav-option option5">
                   <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/6.png" class="nav-img" alt="articles"> -->
                   <i class="fa-solid fa-building-columns" class="nav-img"></i>
-                  <button class="btn  dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Accounts
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <!-- <a class="dropdown-item" href="#">Statments</a> -->
-                    <a class="dropdown-item" href="/viewInwardpayments">Veiw Inward Payments</a>
-                    <a class="dropdown-item" href="/addinwardpayments">Add Inward Payments</a>
+                    <a class="dropdown-item" href="/viewInwardpayments">Veiw inward pyaments</a>
+                    <a class="dropdown-item" href="/addinwardpayments">Add inward</a>
                   </div>
               </div>
               <div class="nav-option option5">
-                    <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/6.png" class="nav-img" alt="articles"> -->
-                    <i class='fas fa-user-alt' class="nav-img"></i>
-                    <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    User 
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="/AddUser">Create User</a>
-                        <a class="dropdown-item" href="/ViewUser">View User</a>
-                    </div>
+                <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/6.png" class="nav-img" alt="articles"> -->
+                <i class='fas fa-user-alt' class="nav-img"></i>
+                <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                User 
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="/AddUser">Create User</a>
+                  <a class="dropdown-item" href="/ViewUser">View User</a>
                 </div>
+            </div>
               <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
               <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
               <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -654,6 +661,7 @@
       </nav>
   </div>
   <div class="main">
+
       <div class="searchbar2">
           <input type="text"
               name=""
@@ -665,42 +673,37 @@
                   alt="search-button">
           </div>
       </div>
-      <div class="container">
-            <h4 class="form_heading">View Invoice</h4>
-            <hr/>
-            <!-- <form>
-                <input type="text" id="searchInput" name="q" placeholder="Search...">
-                <button type="button" id="searchButton">Search</button>
-            </form> -->
-            <table>
-              <tr>
-                <th>Invoice Number</th>
-                <th>Customer Name</th>
-                <th>Purchasing order</th>
-                <th>Purchasing Date</th>
-                <!-- <th>G.total</th> -->
-                <th>Download Invoice</th>
-                <th>Action</th>
-              </tr>
-              {% for inv in invoice %}
-              <tr>
-                <td>{{inv.invoice_no}}</td>
-                <td>{{inv.client_name}}</td>
-                <td>{{inv.purchase_order_number}}</td>
-                <td>{{inv.invoice_date}}</td>
-                <!-- <td>22,000</td> -->
-                <td style="text-align: center;">
-                    <a href="/invoiceslip/{{inv.id}}"><i class="fa-solid fa-download custom-icon"></i></a>
-                </td>
-                <td>
-                    <!-- <a href="/editinvoice/{{inv.id}}"><i class="fa-solid fa-pen custom-icon"></i></a> -->
-                    <a href="/deleteinvoice/{{inv.id}}"><i class="fa-solid fa-trash custom-icon"></i></a>
-                </td>
-              </tr>
-              {% endfor %}
-            </table>
-        </div>
-    </div>
-    <!-- <script src="script.js"></script> -->
+      <div class="box-container">
+        <body>
+            <div class="container">
+                <h2 class="form_heading">User Registration</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role:</label>
+                        <select id="role" name="role" required>
+                            <option value="">Select Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <input type="submit" value="Submit">
+                    {% if error_message %}
+                        <p class="para">{{error_message}}</p>
+                    {% endif %}
+                </form>
+            </div>
+    </body>
 </html>
-

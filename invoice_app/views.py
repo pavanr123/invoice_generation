@@ -2,7 +2,7 @@
 from queue import Empty
 from unittest import result
 from django.shortcuts import render,redirect,HttpResponse
-from .models import Customer, Product ,InwardPayments,AdminProfile,NewInvoice,ProductDetails
+from .models import Customer, Product ,InwardPayments,AdminProfile,NewInvoice,ProductDetails,Users
 import random
 from django.core.mail import send_mail
 from django.conf import settings
@@ -18,15 +18,18 @@ def login(request):
 
 
 def otp(request):
-    db_email = "usmanbashap@pathbreakertech.com"
-    db_password = "Invoice@!23"
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        if email != db_email:
-            return HttpResponse("invalid email")
-        if password != db_password:
-            return HttpResponse("invalid password")
+        is_valid = False
+        if Users.objects.filter(email=email, password=password).exists():
+            is_valid = True
+        elif Users.objects.filter(username=email, password=password).exists():
+            is_valid = True
+            email = email = Users.objects.filter(username=email).values('email').first() 
+        else:
+            return HttpResponse("Invalid Credentials")
+        
         otp = str(random.randint(100000, 999999))
         try:
             send_mail(
@@ -494,7 +497,75 @@ def productdetails(request):
     
     return JsonResponse({'data': product_data})
 
-    
+
+def AddUser(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        role = request.POST['role']
+        password = request.POST['password']
+        status = "Active"
+
+        if Users.objects.filter(username=username).exists():
+            error_message = "User Already Exists"
+            return render(request, 'adduser.html', {'error_message': error_message})
+        
+        if Users.objects.filter(email=email).exists():
+            error_message = "Email Already Exists"
+            return render(request, 'adduser.html', {'error_message': error_message})
+        
+        add_cum = Users(username=username,email=email,role=role,password=password,status = status)  
+        add_cum.save()
+
+        return redirect("/dashboard")
+    elif request.method == "GET":
+        return render(request,'adduser.html')
+    else:
+        return HttpResponse("ERROR")
+
+
+def ViewUser(request):
+    users = Users.objects.all()
+    result = {
+        'users': users
+    }
+    return render(request ,'viewuser.html',result) 
+
+
+def EditUser(request):
+    user_profiles = Users.objects.all()
+    return render(request, 'editadmin.html',{'user_profiles':user_profiles})
+
+
+def UpdateUser(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        role = request.POST['role']
+        password = request.POST['password']
+
+        user = Users.objects.get(id=id)
+
+        user.username = username
+        user.email = email
+        user.role = role
+        user.password = password
+        user.save()
+
+        return redirect("/editadmin")
+    return HttpResponse("ERROR")
+
+
+def DeleteUser(request,id):
+    user = Users.objects.get(id=id)
+    user.delete()
+    return redirect("/ViewUser")
+ 
+
+
+
+
+
 
 
 
