@@ -1,14 +1,14 @@
-#from asyncio.windows_events import NULL
-from queue import Empty
-from unittest import result
 from django.shortcuts import render,redirect,HttpResponse
-from .models import Customer, Product ,InwardPayments,AdminProfile,NewInvoice,ProductDetails,Users
+from .models import Customer, Product ,InwardPayments,AdminProfile,NewInvoice,ProductDetails,Users,Otp
 import random
 from django.core.mail import send_mail
 from django.conf import settings
 import datetime
 import json
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 
 # Create your views here.
@@ -16,7 +16,7 @@ from django.http import JsonResponse
 def login(request):
     return render(request,'login.html')
 
-
+@csrf_exempt
 def otp(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -29,7 +29,6 @@ def otp(request):
             email = email = Users.objects.filter(username=email).values('email').first() 
         else:
             return HttpResponse("Invalid Credentials")
-        
         otp = str(random.randint(100000, 999999))
         try:
             send_mail(
@@ -41,22 +40,32 @@ def otp(request):
                 False,
             )
         except Exception as e:
-            print(e)
+            print(e)    
 
-        request.session['otp'] = otp
-        request.session['email'] = email
-    return render(request, 'otp.html')
+        user = Users.objects.get(email=email)
+        otp = Otp(user=user, otp_code=otp)
+        otp.save()
+        # request.session['otp'] = otp
+        # request.session['email'] = email
+    # return render(request, 'otp.html')
+    return JsonResponse({"data": "OTP sent successfully"})
 
-
+@csrf_exempt
 def dashboard(request):
     if request.method == 'POST':
         otp = request.POST['otp']
-        if otp == request.session.get('otp'):
+        otp_record = Otp.objects.filter(otp_code=otp).first()
+        if otp_record:
             return render(request, 'dashboard.html')
-            # return HttpResponse('OTP verified successfully!')
         else:
-            # return render(request,'otp.html',{'result': 'Invalid OTP'})
             return HttpResponse('Invalid OTP')
+        # otp = request.POST['otp']
+        # if otp == request.session.get('otp'):
+        #     return render(request, 'dashboard.html')
+        #     # return HttpResponse('OTP verified successfully!')
+        # else:
+        #     # return render(request,'otp.html',{'result': 'Invalid OTP'})
+        #     return HttpResponse('Invalid OTP')
         
     total_rows_count = NewInvoice.objects.all().count()
     total_cus = Customer.objects.all().count()
@@ -65,30 +74,35 @@ def dashboard(request):
         'total_rows_count':total_rows_count,
         'total_cus':total_cus,
     }
-    return render(request,"dashboard.html",result)
+    return JsonResponse({"data": result})
+    # return render(request,"dashboard.html",result)
 
 
-def addcoustmer(request):
+@csrf_exempt
+def addcoustmer(request):  
     if request.method == "POST":
-        customer = request.POST['client']
-        mobile_number = request.POST['mobile']
+        customer = request.POST['customer']
+        mobile_number = request.POST['mobilenumber']
         mail_id = request.POST['email']
         address = request.POST['address']
         state = request.POST['state']
         city = request.POST['city']
         pin_code = request.POST['pincode']
-        gst_number = request.POST['gst']
+        gst_number = request.POST['gstnumber']
         state_code = request.POST['stateCode']
 
         add_cum = Customer(customer=customer,mobile_number=mobile_number,mail_id=mail_id,address=address,state=state,city=city,
                            pin_code=pin_code,gst_number=gst_number,state_code=state_code)
         
         add_cum.save()
-        return redirect("/dashboard")
-    elif request.method == "GET":
-        return render(request,'coustmer.html')
-    else:
-        return HttpResponse("ERROR")
+        return JsonResponse({"data":"data saved successfully"})
+    
+    #     return redirect("/dashboard")
+    # elif request.method == "GET":
+    #     return render(request,'coustmer.html')
+    # else:
+    #     return HttpResponse("ERROR")
+
 
 
 def viewcoustmer(request):
@@ -96,15 +110,29 @@ def viewcoustmer(request):
         q = request.GET['q']
         customer = Customer.objects.filter(customer__icontains=q)
     else:
+        customers = Customer.objects.all()
+    # result = {
+    #     'customer': customer 
+    # }
+    result = []
+    for customer in customers:
+        obj = {
+            'customer': customer.customer,
+            'mobile_number':customer.mobile_number,
+            'mail_id': customer.mail_id,
+            'address': customer.address,
+            'state': customer.state,
+            'city': customer.city,
+            'pin_code': customer.pin_code,
+            'gst_number': customer.gst_number,
+            'state_code': customer.state_code 
+        }
+        result.append(obj)
+    return JsonResponse({'data': result})
+    # return render(request, 'viewcoustmer.html',result)
 
-        customer = Customer.objects.all()
-    result = {
-        'customer': customer 
-    }
-    
-    return render(request, 'viewcoustmer.html',result)
 
-
+@csrf_exempt
 def addProduct(request):
     if request.method == "POST":
         product_name = request.POST['product_name']
@@ -118,27 +146,41 @@ def addProduct(request):
         add_product = Product(product_name=product_name,product_cost=product_cost,hsn_no=hsn_no,cgst=cgst,sgst=sgst,igst=igst)
         
         add_product.save()
-        return redirect("/dashboard")
-    elif request.method == "GET":
-        # //user_details = users.find_by_role(role=admin)
-        # user_id = user_details.user_id
-        # user_id = user_id
-        return render(request,'addproduct.html')
-    else:
-        return HttpResponse("ERROR")
+        return JsonResponse({"data":"Data saved success"})
+        # return redirect("/dashboard")
+    # elif request.method == "GET":
+    #     # //user_details = users.find_by_role(role=admin)
+    #     # user_id = user_details.user_id
+    #     # user_id = user_id
+    #     return render(request,'addproduct.html')
+    # else:
+    #     return HttpResponse("ERROR")
     
+
 
 def viewProduct(request):
     if 'q' in request.GET:
         q = request.GET['q']
-        # customer = Customer.objects.filter(customer__icontains=q)
         product = Product.objects.filter(product_name__icontains=q)
     else:
-        product = Product.objects.all()
-    result = {
-    'product': product
-    }
-    return render(request ,'viewproduct.html',result)
+        products = Product.objects.all()
+    # result = {
+    # 'product': product
+    # }
+    result = []
+    for product in products:
+        obj = {
+            'product_name': product.product_name,
+            'product_cost': product.product_cost,
+            'hsn_no': product.hsn_no,
+            'cgst': product.cgst,
+            'sgst': product.sgst,
+            'igst':product.igst
+        }
+        result.append(obj)
+    return JsonResponse({"data": result})
+    # return render(request ,'viewproduct.html',result)
+
 
 
 def editProduct(request,id):
@@ -146,6 +188,7 @@ def editProduct(request,id):
     return render(request,'editproduct.html',{"product":product})
 
 
+@csrf_exempt
 def updateProduct(request,id):
     if request.method == "POST":
         product_name = request.POST['product_name']
@@ -158,41 +201,57 @@ def updateProduct(request,id):
         product.product_cost = product_cost
         product.hsn_no = hsn_no
         product.save()
-        return redirect("/viewproduct")
+        # return redirect("/viewproduct")
+        return JsonResponse({"message": "Product Updated Successfully"})
     return HttpResponse("ERROR")
 
 
+@csrf_exempt
 def deleteProduct(request,id):
     product = Product.objects.get(id=id)
     product.delete()
-    return redirect("/viewproduct")
+    return JsonResponse({"data" :"Product deleted successfully"})
+    # return redirect("/viewproduct")
 
 
+@csrf_exempt
 def addInwardPayments(request):
     if request.method == "POST":
-        customer_name = request.POST['client']
+        customer_name = request.POST['custmonername']
         amount = request.POST['amount']
         date = request.POST['date']
 
         add_inward = InwardPayments(customer_name = customer_name,amount = amount,date = date)
         
         add_inward.save()
-        return redirect("/dashboard")
-    elif request.method == "GET":
-        return render(request,'addInwardPayments.html')
-    else:
-        return HttpResponse("ERROR")
+        return JsonResponse({"data": "data saved successfully"})
+    #     return redirect("/dashboard")
+    # elif request.method == "GET":
+    #     return render(request,'addInwardPayments.html')
+    # else:
+    #     return HttpResponse("ERROR")
+
 
 
 def viewInwardpayments(request):
     view = InwardPayments.objects.all()
-    result = {
-        'view': view
-    }
-    return render(request ,'viewInwardpayments.html',result)
+    # result = {
+    #     'view': view
+    # }
+    result = []
+    for data in view:
+        obj = {
+            "customer_name": data.customer_name,
+            "amount": data.amount,
+            "date": data.date
+        }
+        result.append(obj)
+        return JsonResponse({"data": result})
+    # return render(request ,'viewInwardpayments.html',result)
 
 
 
+@csrf_exempt
 def adminprofile(request):
     if request.method == "POST":
         client = request.POST['client']
@@ -203,7 +262,7 @@ def adminprofile(request):
         phone_number = request.POST['phone']
         company_name = request.POST['company']
         pan_number = request.POST['pan']
-        gst_number = request.POST['gst']
+        gst_number = request.POST['gstnumber']
         account_number = request.POST['bankAccount']
         bank_name = request.POST['bankName']
         bank_branch = request.POST['bankBranch']
@@ -214,11 +273,12 @@ def adminprofile(request):
                                  ifsc_code=ifsc_code)
         
         add_admin.save()
-        return redirect('/dashboard')
-    elif request.method == "GET":
-        return render(request,'adminprofile.html')
-    else:
-        return HttpResponse("ERROR")
+        return JsonResponse({"data":"data saved successfully"})
+    #     return redirect('/dashboard')
+    # elif request.method == "GET":
+    #     return render(request,'adminprofile.html')
+    # else:
+    #     return HttpResponse("ERROR")
 
 
 
@@ -263,17 +323,20 @@ def updateadmin(request,id):
     return HttpResponse("ERROR")
 
 
+@csrf_exempt
 def deleteadmin(request,id):
     admin = AdminProfile.objects.get(id=id)
     admin.delete()
-    return redirect("/dashboard")
+    return JsonResponse({"data": "Admin Deleted Successfully"})
+    # return redirect("/dashboard")
 
 
+@csrf_exempt
 def createinvoice(request):
     try:
         if request.method == "POST":
             data = json.loads(request.body)
-            print(data)
+            # print(data)
             # Extract invoice data
             customer_name = data['customer_name']
             purchase_order_number = data['purchase_order']
@@ -326,21 +389,32 @@ def createinvoice(request):
                 'data':data,
                 'product_data':product_data
                         }
-            return render(request,"createinvoice.html",result)
+            return JsonResponse({"data": result})
+            # return render(request,"createinvoice.html",result)
     
         # else:
         #     return HttpResponse("ERROR")  
-        return render(request, 'createinvoice.html')
+        # return render(request, 'createinvoice.html')
+        return JsonResponse({"data":"saved successfully"})
     except Exception as e:
-        return JsonResponse({"success": f"data successfully saved: {e}"}, status=200)
+        return JsonResponse({"error": f"An unexpected error occurred: {e}"}, status=500)
         
 
 def viewinvoice(request):
-    invoice = NewInvoice.objects.all()
-    result = {
-        'invoice': invoice
-    }
-    return render(request ,'viewinvoice.html',result) 
+    invoices = NewInvoice.objects.all()
+    # # result = {
+    # #     'invoice': invoice
+    # # }
+    # return render(request ,'viewinvoice.html',result)
+    result = []
+    for invoice in invoices:
+        obj = {
+            "client_name" : invoice.client_name,
+            "invoice_date" : invoice.invoice_date,
+            "invoice_no" : invoice.invoice_no
+        }
+        result.append(obj)
+    return JsonResponse({"data": result})
  
     
 def editInvoice(request,id):
@@ -348,7 +422,7 @@ def editInvoice(request,id):
     return render(request,'editinvoice.html',{"product":product})
 
 
-def updateInvoice(request,id):
+# def updateInvoice(request,id):
     if request.method == "POST":
         client_name = request.POST['client_name']
         purchase_order_number = request.POST['purchase_order']
@@ -376,13 +450,14 @@ def updateInvoice(request,id):
         return redirect("/viewinvoice")
     return HttpResponse("ERROR")
 
-
+@csrf_exempt
 def deleteInvoice(request,id):
     invoice = NewInvoice.objects.get(id=id)
     invoice.delete()
-    return redirect("/viewinvoice")
+    # return redirect("/viewinvoice")
+    return JsonResponse({"data": "Invoice Deleted Successfully"})
 
-
+@csrf_exempt
 def invoiceslip(request,id): 
     data = AdminProfile.objects.all().values('bank_name','gst_number','pan_number','account_number','ifsc_code','state').first()
     bank_name = data['bank_name']
@@ -481,7 +556,8 @@ def invoiceslip(request,id):
         'productdetails': productdetails,
         # 'count': count
     }
-    return render(request, 'invoiceslip.html',result)
+    # return render(request, 'invoiceslip.html',result)
+    return JsonResponse({"data": result})
 
 
 def productdetails(request):
@@ -497,7 +573,7 @@ def productdetails(request):
     
     return JsonResponse({'data': product_data})
 
-
+@csrf_exempt
 def AddUser(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -508,28 +584,36 @@ def AddUser(request):
 
         if Users.objects.filter(username=username).exists():
             error_message = "User Already Exists"
-            return render(request, 'adduser.html', {'error_message': error_message})
+            #return render(request, 'adduser.html', {'error_message': error_message})
+            return JsonResponse({"message": error_message})
         
         if Users.objects.filter(email=email).exists():
             error_message = "Email Already Exists"
-            return render(request, 'adduser.html', {'error_message': error_message})
+            return JsonResponse({"message": error_message})
+            #return render(request, 'adduser.html', {'error_message': error_message})
         
         add_cum = Users(username=username,email=email,role=role,password=password,status = status)  
         add_cum.save()
 
-        return redirect("/dashboard")
-    elif request.method == "GET":
-        return render(request,'adduser.html')
-    else:
-        return HttpResponse("ERROR")
+        #return redirect("/dashboard")
+        return JsonResponse({"message": "user added successfully"})
 
 
 def ViewUser(request):
     users = Users.objects.all()
-    result = {
-        'users': users
-    }
-    return render(request ,'viewuser.html',result) 
+
+    data = []
+    for user in users:
+        obj = {
+            'username': user.username,
+            'email': user.email,
+            'role': user.role,
+            'status': user.status
+        }
+        data.append(obj)
+    
+    return JsonResponse({"data": data})
+    #return render(request ,'viewuser.html',result) 
 
 
 def EditUser(request):
@@ -555,11 +639,13 @@ def UpdateUser(request):
         return redirect("/editadmin")
     return HttpResponse("ERROR")
 
-
+@csrf_exempt
 def DeleteUser(request,id):
     user = Users.objects.get(id=id)
     user.delete()
-    return redirect("/ViewUser")
+    return JsonResponse({"data" :"User Deleted Successfully"})
+
+    # return redirect("/ViewUser")
  
 
 

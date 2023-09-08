@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Customer,Product,InwardPayments,AdminProfile,NewInvoice,ProductDetails,Users
+from .models import Customer,Product,InwardPayments,AdminProfile,NewInvoice,ProductDetails,Users,Otp
 
 # Register your models here.
 admin.site.register(Customer)
@@ -9,3 +9,4 @@ admin.site.register(AdminProfile)
 admin.site.register(NewInvoice)
 admin.site.register(ProductDetails)
 admin.site.register(Users)
+admin.site.register(Otp)
