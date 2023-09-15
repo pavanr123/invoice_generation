@@ -4,6 +4,16 @@ from django.utils import timezone
 
 
 # Create your models here.
+
+
+class Otp(models.Model):
+    user = models.ForeignKey('Users', on_delete=models.CASCADE)
+    otp_code = models.CharField(max_length=6,default='none')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'OTP for {self.user.email} created at {self.created_at}'
+
 class Customer(models.Model):
     customer = models.CharField(max_length=100)
     mobile_number = models.CharField(max_length=100)
