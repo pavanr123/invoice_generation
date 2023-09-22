@@ -73,27 +73,27 @@ WSGI_APPLICATION = 'invoice_project.wsgi.application'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'invoices', #database name
-        'USER': 'postgres',
-        'PASSWORD': 'usman@123',
-        'HOST': 'localhost',
-        'PORT': '5432',  
-    }
-}
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'invoice', #database name
-#         'USER': 'invoice',
-#         'PASSWORD': 'Invoice@!23',
-#         'HOST': '192.168.1.163',
-#         'PORT': '5433',  
+#         'NAME': 'invoices', #database name
+#         'USER': 'postgres',
+#         'PASSWORD': 'usman@123',
+#         'HOST': 'localhost',
+#         'PORT': '5432',  
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'invoice', #database name
+        'USER': 'invoice',
+        'PASSWORD': 'Invoice@!23',
+        'HOST': '192.168.1.163',
+        'PORT': '5433',  
+    }
+}
 
 
 
