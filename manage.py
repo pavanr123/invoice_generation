@@ -9,7 +9,7 @@ from django.core.management.commands.runserver import Command as runserver
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'invoice_project.settings')
-    runserver.default_port = '8001'
+    runserver.default_port = '8000'
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
