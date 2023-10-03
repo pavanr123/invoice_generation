@@ -16,6 +16,7 @@ from django.views.decorators.csrf import csrf_exempt
 def login(request):
     return render(request,'login.html')
 
+
 @csrf_exempt
 def otp(request):
     if request.method == 'POST':
@@ -49,6 +50,7 @@ def otp(request):
         # request.session['email'] = email
     # return render(request, 'otp.html')
     return JsonResponse({"data": "OTP sent successfully"})
+
 
 @csrf_exempt
 def dashboard(request):
@@ -188,6 +190,7 @@ def editProduct(request,id):
     return render(request,'editproduct.html',{"product":product})
 
 
+
 @csrf_exempt
 def updateProduct(request,id):
     if request.method == "POST":
@@ -285,6 +288,7 @@ def adminprofile(request):
 def editadmin(request):
     admin_profiles = AdminProfile.objects.all()
     return render(request, 'editadmin.html',{'admin':admin_profiles})
+
 
 
 def updateadmin(request,id):
@@ -416,7 +420,8 @@ def viewinvoice(request):
         result.append(obj)
     return JsonResponse({"data": result})
  
-    
+
+
 def editInvoice(request,id):
     product = NewInvoice.objects.get(id=id)
     return render(request,'editinvoice.html',{"product":product})
@@ -456,6 +461,7 @@ def deleteInvoice(request,id):
     invoice.delete()
     # return redirect("/viewinvoice")
     return JsonResponse({"data": "Invoice Deleted Successfully"})
+
 
 @csrf_exempt
 def invoiceslip(request,id): 
