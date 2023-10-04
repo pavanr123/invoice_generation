@@ -20,8 +20,9 @@ def login(request):
 @csrf_exempt
 def otp(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
+        data = json.loads(request.body)
+        email = data['email']
+        password = data['password']
         is_valid = False
         if Users.objects.filter(email=email, password=password).exists():
             is_valid = True
@@ -55,7 +56,8 @@ def otp(request):
 @csrf_exempt
 def dashboard(request):
     if request.method == 'POST':
-        otp = request.POST['otp']
+        data = json.loads(request.body)
+        otp = data['otp']
         otp_record = Otp.objects.filter(otp_code=otp).first()
         if otp_record:
             return render(request, 'dashboard.html')
@@ -84,7 +86,6 @@ def dashboard(request):
 def addcoustmer(request):  
     if request.method == "POST":
         data = json.loads(request.body)
-
         customer = data['customer']
         mobile_number = data['mobilenumber']
         mail_id = data['email']
@@ -139,12 +140,13 @@ def viewcoustmer(request):
 @csrf_exempt
 def addProduct(request):
     if request.method == "POST":
-        product_name = request.POST['product_name']
-        product_cost = request.POST['productcost']
-        hsn_no = request.POST['hsn_no']
-        cgst = request.POST['cgst']
-        sgst= request.POST['sgst']
-        igst = request.POST['igst']
+        data = json.loads(request.body)
+        product_name = data['product_name']
+        product_cost = data['productcost']
+        hsn_no = data['hsn_no']
+        cgst = data['cgst']
+        sgst= data['sgst']
+        igst = data['igst']
         #custermer_id = req.[cy'']
 
         add_product = Product(product_name=product_name,product_cost=product_cost,hsn_no=hsn_no,cgst=cgst,sgst=sgst,igst=igst)
@@ -196,9 +198,10 @@ def editProduct(request,id):
 @csrf_exempt
 def updateProduct(request,id):
     if request.method == "POST":
-        product_name = request.POST['product_name']
-        product_cost = request.POST['productcost']
-        hsn_no = request.POST['hsn_no']
+        data = json.loads(request.body)
+        product_name = data['product_name']
+        product_cost = data['productcost']
+        hsn_no = data['hsn_no']
 
         product = Product.objects.get(id=id)
 
@@ -222,9 +225,10 @@ def deleteProduct(request,id):
 @csrf_exempt
 def addInwardPayments(request):
     if request.method == "POST":
-        customer_name = request.POST['custmonername']
-        amount = request.POST['amount']
-        date = request.POST['date']
+        data = json.loads(request.body)
+        customer_name = data['custmonername']
+        amount = data['amount']
+        date = data['date']
 
         add_inward = InwardPayments(customer_name = customer_name,amount = amount,date = date)
         
@@ -259,19 +263,20 @@ def viewInwardpayments(request):
 @csrf_exempt
 def adminprofile(request):
     if request.method == "POST":
-        client = request.POST['client']
-        gender = request.POST['gender']
-        mail_id = request.POST['email']
-        address = request.POST['address']
-        state = request.POST['state']
-        phone_number = request.POST['phone']
-        company_name = request.POST['company']
-        pan_number = request.POST['pan']
-        gst_number = request.POST['gstnumber']
-        account_number = request.POST['bankAccount']
-        bank_name = request.POST['bankName']
-        bank_branch = request.POST['bankBranch']
-        ifsc_code = request.POST['ifsc']
+        data = json.loads(request.body)
+        client = data['client']
+        gender = data['gender']
+        mail_id = data['email']
+        address = data['address']
+        state = data['state']
+        phone_number = data['phone']
+        company_name = data['company']
+        pan_number = data['pan']
+        gst_number = data['gstnumber']
+        account_number = data['bankAccount']
+        bank_name = data['bankName']
+        bank_branch = data['bankBranch']
+        ifsc_code = data['ifsc']
 
         add_admin = AdminProfile(client=client,gender=gender,mail_id=mail_id,address=address,state=state,phone_number=phone_number,
                                  company_name=company_name,pan_number=pan_number,gst_number=gst_number,account_number=account_number,bank_name=bank_name,bank_branch=bank_branch,
@@ -295,19 +300,20 @@ def editadmin(request):
 
 def updateadmin(request,id):
     if request.method == "POST":
-        client  = request.POST['client']
-        gender = request.POST['gender']
-        mail_id = request.POST['email']
-        address = request.POST['address']
-        state = request.POST['state']
-        phone_number = request.POST['phone']
-        company_name = request.POST['company']
-        pan_number = request.POST['pan']
-        gst_number = request.POST['gst']
-        account_number = request.POST['bankAccount']
-        bank_name = request.POST['bankName']
-        bank_branch = request.POST['bankBranch']
-        ifsc_code = request.POST['ifsc']
+        data = json.loads(request.body)
+        client  = data['client']
+        gender = data['gender']
+        mail_id = data['email']
+        address = data['address']
+        state = data['state']
+        phone_number = data['phone']
+        company_name = data['company']
+        pan_number = data['pan']
+        gst_number = data['gst']
+        account_number = data['bankAccount']
+        bank_name = data['bankName']
+        bank_branch = data['bankBranch']
+        ifsc_code = data['ifsc']
 
         admin = AdminProfile.objects.get(id=id)
 
@@ -584,10 +590,11 @@ def productdetails(request):
 @csrf_exempt
 def AddUser(request):
     if request.method == "POST":
-        username = request.POST['username']
-        email = request.POST['email']
-        role = request.POST['role']
-        password = request.POST['password']
+        data = json.loads(request.body)
+        username = data['username']
+        email = data['email']
+        role = data['role']
+        password = data['password']
         status = "Active"
 
         if Users.objects.filter(username=username).exists():
@@ -631,10 +638,11 @@ def EditUser(request):
 
 def UpdateUser(request):
     if request.method == "POST":
-        username = request.POST['username']
-        email = request.POST['email']
-        role = request.POST['role']
-        password = request.POST['password']
+        data = json.loads(request.body)
+        username = data['username']
+        email = data['email']
+        role = data['role']
+        password = data['password']
 
         user = Users.objects.get(id=id)
 
