@@ -83,15 +83,17 @@ def dashboard(request):
 @csrf_exempt
 def addcoustmer(request):  
     if request.method == "POST":
-        customer = request.POST['customer']
-        mobile_number = request.POST['mobilenumber']
-        mail_id = request.POST['email']
-        address = request.POST['address']
-        state = request.POST['state']
-        city = request.POST['city']
-        pin_code = request.POST['pincode']
-        gst_number = request.POST['gstnumber']
-        state_code = request.POST['stateCode']
+        data = json.loads(request.body)
+
+        customer = data['customer']
+        mobile_number = data['mobilenumber']
+        mail_id = data['email']
+        address = data['address']
+        state = data['state']
+        city = data['city']
+        pin_code = data['pincode']
+        gst_number = data['gstnumber']
+        state_code = data['stateCode']
 
         add_cum = Customer(customer=customer,mobile_number=mobile_number,mail_id=mail_id,address=address,state=state,city=city,
                            pin_code=pin_code,gst_number=gst_number,state_code=state_code)
