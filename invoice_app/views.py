@@ -60,16 +60,10 @@ def dashboard(request):
         otp = data['otp']
         otp_record = Otp.objects.filter(otp_code=otp).first()
         if otp_record:
-            return render(request, 'dashboard.html')
+            # return render(request, 'dashboard.html')
+            return HttpResponse("OTP verified successfully")
         else:
             return HttpResponse('Invalid OTP')
-        # otp = request.POST['otp']
-        # if otp == request.session.get('otp'):
-        #     return render(request, 'dashboard.html')
-        #     # return HttpResponse('OTP verified successfully!')
-        # else:
-        #     # return render(request,'otp.html',{'result': 'Invalid OTP'})
-        #     return HttpResponse('Invalid OTP')
         
     total_rows_count = NewInvoice.objects.all().count()
     total_cus = Customer.objects.all().count()
@@ -79,7 +73,6 @@ def dashboard(request):
         'total_cus':total_cus,
     }
     return JsonResponse({"data": result})
-    # return render(request,"dashboard.html",result)
 
 
 @csrf_exempt
@@ -122,6 +115,7 @@ def viewcoustmer(request):
     result = []
     for customer in customers:
         obj = {
+            'customer_id': customer.id,
             'customer': customer.customer,
             'mobile_number':customer.mobile_number,
             'mail_id': customer.mail_id,
@@ -134,7 +128,39 @@ def viewcoustmer(request):
         }
         result.append(obj)
     return JsonResponse({'data': result})
-    # return render(request, 'viewcoustmer.html',result)
+
+
+@csrf_exempt
+def updatecustomer(request,id):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        customer = data['customer']
+        mobile_number = data['mobile_number']
+        mail_id = data['mail_id']
+        city = data['city']
+        pin_code = data['pin_code']
+        gst_number = data['gst_number']
+        state_code = data['state_code']
+
+        customer = Customer.objects.get(id=id)
+
+        customer.customer = customer
+        customer.mobile_number = mobile_number
+        customer.mail_id = mail_id
+        customer.city = city
+        customer.pin_code = pin_code
+        customer.gst_number = gst_number
+        customer.state_code = state_code
+        customer.save()
+        return JsonResponse({"message": "Customer Updated Successfully"})
+    return HttpResponse("ERROR")
+
+
+@csrf_exempt
+def deletecustomer(request,id):
+    customers = Customer.objects.get(id=id)
+    customers.delete()
+    return JsonResponse({"data" :"customer deleted successfully"})
 
 
 @csrf_exempt
@@ -176,6 +202,7 @@ def viewProduct(request):
     result = []
     for product in products:
         obj = {
+            'product_id': product.id,
             'product_name': product.product_name,
             'product_cost': product.product_cost,
             'hsn_no': product.hsn_no,
@@ -185,7 +212,6 @@ def viewProduct(request):
         }
         result.append(obj)
     return JsonResponse({"data": result})
-    # return render(request ,'viewproduct.html',result)
 
 
 
@@ -209,7 +235,7 @@ def updateProduct(request,id):
         product.product_cost = product_cost
         product.hsn_no = hsn_no
         product.save()
-        # return redirect("/viewproduct")
+        # print(product)
         return JsonResponse({"message": "Product Updated Successfully"})
     return HttpResponse("ERROR")
 
@@ -219,7 +245,7 @@ def deleteProduct(request,id):
     product = Product.objects.get(id=id)
     product.delete()
     return JsonResponse({"data" :"Product deleted successfully"})
-    # return redirect("/viewproduct")
+    
 
 
 @csrf_exempt
@@ -256,7 +282,7 @@ def viewInwardpayments(request):
         }
         result.append(obj)
         return JsonResponse({"data": result})
-    # return render(request ,'viewInwardpayments.html',result)
+    
 
 
 
@@ -289,6 +315,30 @@ def adminprofile(request):
     #     return render(request,'adminprofile.html')
     # else:
     #     return HttpResponse("ERROR")
+
+
+def viewadmin(request):
+    admins = AdminProfile.objects.all()
+    result = []
+    for admin in admins:
+        obj = {
+            'admin_id': admin.id,
+            'client': admin.client,
+            'gender':admin.gender,
+            'mail_id': admin.mail_id,
+            'address': admin.address,
+            'state': admin.state,
+            'phone_number': admin.phone_number,
+            'company_name': admin.company_name,
+            'pan_number': admin.pan_number,
+            'gst_number': admin.gst_number,
+            'account_number': admin.account_number,
+            'bank_name': admin.bank_name,
+            'bank_branch': admin.bank_branch,
+            'ifsc_code': admin.ifsc_code
+        }
+        result.append(obj)
+    return JsonResponse({'data': result})
 
 
 
@@ -340,7 +390,7 @@ def deleteadmin(request,id):
     admin = AdminProfile.objects.get(id=id)
     admin.delete()
     return JsonResponse({"data": "Admin Deleted Successfully"})
-    # return redirect("/dashboard")
+    
 
 
 @csrf_exempt
@@ -402,11 +452,9 @@ def createinvoice(request):
                 'product_data':product_data
                         }
             return JsonResponse({"data": result})
-            # return render(request,"createinvoice.html",result)
     
         # else:
         #     return HttpResponse("ERROR")  
-        # return render(request, 'createinvoice.html')
         return JsonResponse({"data":"saved successfully"})
     except Exception as e:
         return JsonResponse({"error": f"An unexpected error occurred: {e}"}, status=500)
@@ -414,10 +462,9 @@ def createinvoice(request):
 
 def viewinvoice(request):
     invoices = NewInvoice.objects.all()
-    # # result = {
-    # #     'invoice': invoice
-    # # }
-    # return render(request ,'viewinvoice.html',result)
+     # result = {
+     #    'invoice': invoice
+     # }
     result = []
     for invoice in invoices:
         obj = {
@@ -467,7 +514,7 @@ def editInvoice(request,id):
 def deleteInvoice(request,id):
     invoice = NewInvoice.objects.get(id=id)
     invoice.delete()
-    # return redirect("/viewinvoice")
+    
     return JsonResponse({"data": "Invoice Deleted Successfully"})
 
 
@@ -482,7 +529,7 @@ def invoiceslip(request,id):
     admin_state = data['state']
 
 
-    data = NewInvoice.objects.filter(id = id).values('client_name','invoice_no','invoice_date','purchase_order_number').first()
+    data = NewInvoice.objects.filter(id = id).values('client_name','invoice_no','invoice_date','purchase_order_number',).first()
     purchase_order_number = data['purchase_order_number']
     invoice_no = data['invoice_no']
     invoice_date = data['invoice_date']
@@ -570,7 +617,7 @@ def invoiceslip(request,id):
         'productdetails': productdetails,
         # 'count': count
     }
-    # return render(request, 'invoiceslip.html',result)
+
     return JsonResponse({"data": result})
 
 
@@ -587,6 +634,7 @@ def productdetails(request):
     
     return JsonResponse({'data': product_data})
 
+
 @csrf_exempt
 def AddUser(request):
     if request.method == "POST":
@@ -599,27 +647,26 @@ def AddUser(request):
 
         if Users.objects.filter(username=username).exists():
             error_message = "User Already Exists"
-            #return render(request, 'adduser.html', {'error_message': error_message})
+            
             return JsonResponse({"message": error_message})
         
         if Users.objects.filter(email=email).exists():
             error_message = "Email Already Exists"
             return JsonResponse({"message": error_message})
-            #return render(request, 'adduser.html', {'error_message': error_message})
+            
         
         add_cum = Users(username=username,email=email,role=role,password=password,status = status)  
         add_cum.save()
 
-        #return redirect("/dashboard")
         return JsonResponse({"message": "user added successfully"})
 
 
 def ViewUser(request):
     users = Users.objects.all()
-
     data = []
     for user in users:
         obj = {
+            'user_id':user.id,
             'username': user.username,
             'email': user.email,
             'role': user.role,
@@ -628,7 +675,6 @@ def ViewUser(request):
         data.append(obj)
     
     return JsonResponse({"data": data})
-    #return render(request ,'viewuser.html',result) 
 
 
 def EditUser(request):
@@ -655,13 +701,13 @@ def UpdateUser(request):
         return redirect("/editadmin")
     return HttpResponse("ERROR")
 
+
 @csrf_exempt
 def DeleteUser(request,id):
     user = Users.objects.get(id=id)
     user.delete()
     return JsonResponse({"data" :"User Deleted Successfully"})
 
-    # return redirect("/ViewUser")
  
 
 
