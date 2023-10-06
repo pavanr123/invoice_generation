@@ -643,12 +643,12 @@ def AddUser(request):
         password = data['password']
         status = "Active"
 
-        if Users.objects.get(username=username):
+        if Users.objects.filter(username=username).exists():
             error_message = "User Already Exists"
             
             return JsonResponse({"message": error_message})
         
-        if Users.objects.get(email=email):
+        if Users.objects.filter(email=email).exists():
             error_message = "Email Already Exists"
             return JsonResponse({"message": error_message})
             
