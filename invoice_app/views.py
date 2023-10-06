@@ -220,7 +220,6 @@ def editProduct(request,id):
     return render(request,'editproduct.html',{"product":product})
 
 
-
 @csrf_exempt
 def updateProduct(request,id):
     if request.method == "POST":
@@ -246,7 +245,6 @@ def deleteProduct(request,id):
     product.delete()
     return JsonResponse({"data" :"Product deleted successfully"})
     
-
 
 @csrf_exempt
 def addInwardPayments(request):
@@ -276,6 +274,7 @@ def viewInwardpayments(request):
     result = []
     for data in view:
         obj = {
+            "inward_id": data.id,
             "customer_name": data.customer_name,
             "amount": data.amount,
             "date": data.date
@@ -391,7 +390,6 @@ def deleteadmin(request,id):
     admin.delete()
     return JsonResponse({"data": "Admin Deleted Successfully"})
     
-
 
 @csrf_exempt
 def createinvoice(request):
@@ -645,12 +643,12 @@ def AddUser(request):
         password = data['password']
         status = "Active"
 
-        if Users.objects.filter(username=username).exists():
+        if Users.objects.get(username=username):
             error_message = "User Already Exists"
             
             return JsonResponse({"message": error_message})
         
-        if Users.objects.filter(email=email).exists():
+        if Users.objects.get(email=email):
             error_message = "Email Already Exists"
             return JsonResponse({"message": error_message})
             
