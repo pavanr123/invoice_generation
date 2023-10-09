@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
-
+@csrf_exempt
 def login(request):
     return render(request,'login.html')
 
@@ -135,12 +135,14 @@ def updatecustomer(request,id):
     if request.method == "POST":
         data = json.loads(request.body)
         customer = data['customer']
-        mobile_number = data['mobile_number']
-        mail_id = data['mail_id']
+        mobile_number = data['mobilenumber']
+        mail_id = data['email']
+        address = data['address']
+        state = data['state']
         city = data['city']
-        pin_code = data['pin_code']
-        gst_number = data['gst_number']
-        state_code = data['state_code']
+        pin_code = data['pincode']
+        gst_number = data['gstnumber']
+        state_code = data['stateCode']
 
         customer = Customer.objects.get(id=id)
 
@@ -151,6 +153,8 @@ def updatecustomer(request,id):
         customer.pin_code = pin_code
         customer.gst_number = gst_number
         customer.state_code = state_code
+        customer.address = address
+        customer.state = state
         customer.save()
         return JsonResponse({"message": "Customer Updated Successfully"})
     return HttpResponse("ERROR")
@@ -229,7 +233,7 @@ def updateProduct(request,id):
         hsn_no = data['hsn_no']
 
         product = Product.objects.get(id=id)
-
+    
         product.product_name = product_name
         product.product_cost = product_cost
         product.hsn_no = hsn_no
