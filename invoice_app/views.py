@@ -223,7 +223,16 @@ def viewProduct(request):
 
 def editProduct(request,id):
     product = Product.objects.get(id=id)
-    return render(request,'editproduct.html',{"product":product})
+    result = {
+            'product_id': product.id,
+            'product_name': product.product_name,
+            'product_cost': product.product_cost,
+            'hsn_no': product.hsn_no,
+            'cgst': product.cgst,
+            'sgst': product.sgst,
+            'igst':product.igst
+        }
+    return JsonResponse({"data":result})
 
 
 @csrf_exempt
@@ -231,7 +240,7 @@ def updateProduct(request,id):
     if request.method == "POST":
         data = json.loads(request.body)
         product_name = data['product_name']
-        product_cost = data['product_cost']
+        product_cost = data['productcost']
         hsn_no = data['hsn_no']
 
         product = Product.objects.get(id=id)
