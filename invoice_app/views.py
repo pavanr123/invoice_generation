@@ -169,12 +169,29 @@ def deletecustomer(request,id):
     return JsonResponse({"data" :"customer deleted successfully"})
 
 
+def EditCustomer(request,id):
+    customer = Customer.objects.get(id=id)
+    result = {
+            'customer_id':customer.id,
+            'customer': customer.customer,
+            'mobilenumber':customer.mobile_number,
+            'mail_id': customer.mail_id,
+            'address': customer.address,
+            'state': customer.state,
+            'city': customer.city,
+            'pin_code': customer.pin_code,
+            'gst_number': customer.gst_number,
+            'state_code': customer.state_code
+        }
+    return JsonResponse({"data":result})
+
+
 @csrf_exempt
 def addProduct(request):
     if request.method == "POST":
         data = json.loads(request.body)
         product_name = data['product_name']
-        product_cost = data['productcost']
+        product_cost = data['product_cost']
         hsn_no = data['hsn_no']
         cgst = data['cgst']
         sgst= data['sgst']
@@ -240,7 +257,7 @@ def updateProduct(request,id):
     if request.method == "POST":
         data = json.loads(request.body)
         product_name = data['product_name']
-        product_cost = data['productcost']
+        product_cost = data['product_cost']
         hsn_no = data['hsn_no']
 
         product = Product.objects.get(id=id)
@@ -692,9 +709,18 @@ def ViewUser(request):
     return JsonResponse({"data": data})
 
 
-def EditUser(request):
-    user_profiles = Users.objects.all()
-    return render(request, 'editadmin.html',{'user_profiles':user_profiles})
+def EditUser(request,id):
+    user = Users.objects.get(id=id)
+
+    result = {
+            'user_id':user.id,
+            'username': user.username,
+            'email': user.email,
+            'role': user.role,
+            'status': user.status,
+            'password':user.password
+        }
+    return JsonResponse({"data":result})
 
 
 @csrf_exempt
