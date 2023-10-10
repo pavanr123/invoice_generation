@@ -155,7 +155,9 @@ def updatecustomer(request,id):
         customer.state_code = state_code
         customer.address = address
         customer.state = state
+
         customer.save()
+
         return JsonResponse({"message": "Customer Updated Successfully"})
     return HttpResponse("ERROR")
 
@@ -229,7 +231,7 @@ def updateProduct(request,id):
     if request.method == "POST":
         data = json.loads(request.body)
         product_name = data['product_name']
-        product_cost = data['productcost']
+        product_cost = data['product_cost']
         hsn_no = data['hsn_no']
 
         product = Product.objects.get(id=id)
@@ -277,6 +279,7 @@ def viewInwardpayments(request):
     # }
     result = []
     for data in view:
+        
         obj = {
             "inward_id": data.id,
             "customer_name": data.customer_name,
@@ -672,7 +675,8 @@ def ViewUser(request):
             'username': user.username,
             'email': user.email,
             'role': user.role,
-            'status': user.status
+            'status': user.status,
+            'password':user.password
         }
         data.append(obj)
     
@@ -684,7 +688,8 @@ def EditUser(request):
     return render(request, 'editadmin.html',{'user_profiles':user_profiles})
 
 
-def UpdateUser(request):
+@csrf_exempt
+def UpdateUser(request,id):
     if request.method == "POST":
         data = json.loads(request.body)
         username = data['username']
@@ -700,7 +705,7 @@ def UpdateUser(request):
         user.password = password
         user.save()
 
-        return redirect("/editadmin")
+        return JsonResponse({"message": "User Updated Successfully"})
     return HttpResponse("ERROR")
 
 
