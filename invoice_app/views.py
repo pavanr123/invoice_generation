@@ -41,12 +41,15 @@ def otp(request):
                 [email],
                 False,
             )
-        except Exception as e:
-            print(e)    
+            user = Users.objects.get(email=email)
+            otp = Otp(user=user, otp_code=otp)
+            otp.save()
 
-        user = Users.objects.get(email=email)
-        otp = Otp(user=user, otp_code=otp)
-        otp.save()
+        except Exception as e:
+            # print(e)
+            return JsonResponse({"data": "OTP sent Failed" + str(e)})    
+
+        
         # request.session['otp'] = otp
         # request.session['email'] = email
     # return render(request, 'otp.html')
