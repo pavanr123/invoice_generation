@@ -434,7 +434,7 @@ def createinvoice(request):
             data = json.loads(request.body)
             # print(data)
             # Extract invoice data
-            customer_name = data['customer_name']
+            customer_name = data['customer']
             purchase_order_number = data['purchase_order']
             vendor_code = data['vendor_code']
             invoice_date = data['invoice_date']
@@ -452,7 +452,7 @@ def createinvoice(request):
             # Extract and save product details
             product_details = data['product_details']
             for detail in product_details:
-                purchase_id = detail['product_id']
+                purchase_id = detail['hsn_no']
                 purchase_date = detail['purchase_date']
                 no_of_units_allowed = detail['no_of_units']
                 cost_per_unit = detail['cost_per_unit']
@@ -502,6 +502,7 @@ def viewinvoice(request):
     result = []
     for invoice in invoices:
         obj = {
+            "invoice_id": invoice.id,
             "client_name" : invoice.client_name,
             "invoice_date" : invoice.invoice_date,
             "invoice_no" : invoice.invoice_no
