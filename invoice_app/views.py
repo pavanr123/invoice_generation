@@ -564,8 +564,8 @@ def invoiceslip(request,id):
     admin_state = data['state']
 
 
-    data = NewInvoice.objects.filter(id = id).values('client_name','invoice_no','invoice_date','purchase_order_number',).first()
-    purchase_order_number = data['purchase_order_number']
+    data = NewInvoice.objects.filter(id = id).values('client_name','invoice_no','invoice_date',).first()
+    # purchase_order_number = data['purchase_order_number']
     invoice_no = data['invoice_no']
     invoice_date = data['invoice_date']
     client_name = data['client_name']

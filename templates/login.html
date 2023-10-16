@@ -100,7 +100,7 @@
         <div class='form'>
             <form action="/otp" method="post">
                 {% csrf_token %}
-                <input type="text" placeholder='Usermail' class='text' id='email' name="email" required><br>
+                <input type="text" placeholder='Usermail or Username' class='text' id='email' name="email" required><br>
                 <input type="password" placeholder='password' name="password" class='password' required><br>
                 <input class='btn-login' type="submit" value="Send OTP">
                 <!-- <a class='btn-login' id='do-login'>Login</a> -->
