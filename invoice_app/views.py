@@ -555,13 +555,14 @@ def deleteInvoice(request,id):
 
 @csrf_exempt
 def invoiceslip(request,id): 
-    data = AdminProfile.objects.all().values('bank_name','gst_number','pan_number','account_number','ifsc_code','state').first()
+    data = AdminProfile.objects.all().values('bank_name','gst_number','pan_number','account_number','ifsc_code','state','company_name').first()
     bank_name = data['bank_name']
     gst_number = data['gst_number']
     pan_number = data['pan_number']
     account_number = data['account_number']
     ifsc_code = data['ifsc_code']
     admin_state = data['state']
+    company_name = data['company_name']
 
 
     data = NewInvoice.objects.filter(id = id).values('client_name','invoice_no','invoice_date',).first()
@@ -639,8 +640,10 @@ def invoiceslip(request,id):
         'pan_number':pan_number,
         'account_number':account_number,
         'ifsc_code':ifsc_code,
+        'company_name':company_name,
         'invoice_date':invoice_date,
         'invoice_no':invoice_no,
+        
 
         'sgst':sgst,
         'cgst':cgst,
