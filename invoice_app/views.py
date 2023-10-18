@@ -78,6 +78,9 @@ def dashboard(request):
     return JsonResponse({"data": result})
 
 
+
+
+
 @csrf_exempt
 def addcoustmer(request):  
     if request.method == "POST":
