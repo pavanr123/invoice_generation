@@ -17,6 +17,8 @@ def login(request):
     return render(request,'login.html')
 
 
+
+
 @csrf_exempt
 def otp(request):
     if request.method == 'POST':
