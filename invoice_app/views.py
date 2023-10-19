@@ -495,7 +495,7 @@ def createinvoice(request):
                 purchase_id = detail['hsn_no']
                 purchase_date = detail['purchase_date']
                 no_of_units_allowed = detail['no_of_units']
-                cost_per_unit = detail['cost_per_unit']
+                cost_per_unit = detail['product_cost']
 
                 # Create and save product detail object
                 product_details = ProductDetails(
