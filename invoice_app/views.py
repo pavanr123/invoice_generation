@@ -137,10 +137,10 @@ def viewcoustmer(request):
 
 
 @csrf_exempt
-def updatecustomer(request,id):
+def updatecustomer(request, id):
     if request.method == "POST":
         data = json.loads(request.body)
-        customer = data['customer']
+        new_customer = data['customer']   
         mobile_number = data['mobilenumber']
         mail_id = data['email']
         address = data['address']
@@ -152,7 +152,7 @@ def updatecustomer(request,id):
 
         customer = Customer.objects.get(id=id)
 
-        customer.customer = customer
+        customer.customer = new_customer
         customer.mobile_number = mobile_number
         customer.mail_id = mail_id
         customer.city = city
@@ -162,10 +162,45 @@ def updatecustomer(request,id):
         customer.address = address
         customer.state = state
 
-        customer.save()
+        customer.save()  # Save the changes to the database
 
         return JsonResponse({"message": "Customer Updated Successfully"})
     return HttpResponse("ERROR")
+
+
+
+
+
+# @csrf_exempt
+# def updatecustomer(request,id):
+#     if request.method == "POST":
+#         data = json.loads(request.body)
+#         customer = data['customer']
+#         mobile_number = data['mobilenumber']
+#         mail_id = data['email']
+#         address = data['address']
+#         state = data['state']
+#         city = data['city']
+#         pin_code = data['pincode']
+#         gst_number = data['gstnumber']
+#         state_code = data['stateCode']
+
+#         customer = Customer.objects.get(id=id)
+
+#         customer.customer = customer
+#         customer.mobile_number = mobile_number
+#         customer.mail_id = mail_id
+#         customer.city = city
+#         customer.pin_code = pin_code
+#         customer.gst_number = gst_number
+#         customer.state_code = state_code
+#         customer.address = address
+#         customer.state = state
+
+#         customer.save()
+
+#         return JsonResponse({"message": "Customer Updated Successfully"})
+#     return HttpResponse("ERROR")
 
 
 @csrf_exempt
