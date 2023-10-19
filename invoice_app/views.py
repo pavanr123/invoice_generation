@@ -54,7 +54,7 @@ def otp(request):
         
         # request.session['otp'] = otp
         # request.session['email'] = email
-    # return render(request, 'otp.html')
+        # return render(request, 'otp.html')
     return JsonResponse({"data": "OTP sent successfully"})
 
 
@@ -663,8 +663,12 @@ def invoiceslip(request,id):
     else:
         igst = 18
 
+    sgst_amount = round(total * sgst / 100, 2)
+    cgst_amount = round(total * cgst / 100, 2)
+    igst_amount = round(total * igst / 100, 2)
+
     total = round(total + (total * sgst/100) + (total * cgst/100) + (total * igst/100),2)
-    
+
     result = {
         'customer': customer,
         'mail_id': mail_id,
@@ -688,6 +692,9 @@ def invoiceslip(request,id):
         'sgst':sgst,
         'cgst':cgst,
         'igst':igst,
+        'sgst_amount':sgst_amount,
+        'cgst_amount':cgst_amount,
+        'igst_amount':igst_amount,
         'total':total,
         'state_code': state_code,
         # 'no_of_units_allowed':no_of_units_allowed,
