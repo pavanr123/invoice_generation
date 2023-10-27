@@ -89,13 +89,13 @@ def addcoustmer(request):
         data = json.loads(request.body)
         customer = data['customer']
         mobile_number = data['mobilenumber']
-        mail_id = data['email']
+        mail_id = data['mail_id']
         address = data['address']
         state = data['state']
         city = data['city']
-        pin_code = data['pincode']
-        gst_number = data['gstnumber']
-        state_code = data['stateCode']
+        pin_code = data['pin_code']
+        gst_number = data['gst_number']
+        state_code = data['state_code']
 
         add_cum = Customer(customer=customer,mobile_number=mobile_number,mail_id=mail_id,address=address,state=state,city=city,
                            pin_code=pin_code,gst_number=gst_number,state_code=state_code)
@@ -465,8 +465,7 @@ def deleteadmin(request,id):
     admin = AdminProfile.objects.get(id=id)
     admin.delete()
     return JsonResponse({"data": "Admin Deleted Successfully"})
-    
-
+     
 @csrf_exempt
 def createinvoice(request):
     try:
@@ -631,6 +630,7 @@ def invoiceslip(request,id):
     count = 1
     productdetails = []
     total = 0
+    subtotal = 0
     for db_productdetail in db_productdetails:
         no_of_units_allowed = db_productdetail['no_of_units_allowed']
         cost_per_unit = db_productdetail['cost_per_unit']
@@ -648,6 +648,7 @@ def invoiceslip(request,id):
             "product_name": product_name,
             'count':count
         }
+        subtotal += amount
         total = total + amount
         productdetails.append(productdetail)
         count = count + 1
@@ -688,7 +689,7 @@ def invoiceslip(request,id):
         'invoice_date':invoice_date,
         'invoice_no':invoice_no,
         
-
+        'subtotal':subtotal,
         'sgst':sgst,
         'cgst':cgst,
         'igst':igst,
@@ -803,8 +804,6 @@ def DeleteUser(request,id):
     user = Users.objects.get(id=id)
     user.delete()
     return JsonResponse({"data" :"User Deleted Successfully"})
-
- 
 
 
 
