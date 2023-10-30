@@ -7,6 +7,8 @@ import datetime
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from num2words import num2words
+from datetime import datetime
 
 
 
@@ -367,16 +369,16 @@ def adminprofile(request):
         data = json.loads(request.body)
         client = data['client']
         gender = data['gender']
-        mail_id = data['email']
+        mail_id = data['mail_id']
         address = data['address']
         state = data['state']
-        phone_number = data['phone']
+        phone_number = data['phone_number']
         company_name = data['company']
         pan_number = data['pan']
         gst_number = data['gstnumber']
         account_number = data['bankAccount']
         bank_name = data['bankName']
-        bank_branch = data['bankBranch']
+        bank_branch = data['bank_branch']
         ifsc_code = data['ifsc']
 
         add_admin = AdminProfile(client=client,gender=gender,mail_id=mail_id,address=address,state=state,phone_number=phone_number,
@@ -594,7 +596,7 @@ def deleteInvoice(request,id):
 
 @csrf_exempt
 def invoiceslip(request,id): 
-    data = AdminProfile.objects.all().values('bank_name','gst_number','pan_number','account_number','ifsc_code','state','company_name').first()
+    data = AdminProfile.objects.all().values('bank_name','gst_number','pan_number','account_number','ifsc_code','state','company_name','bank_branch','mail_id','phone_number').first()
     bank_name = data['bank_name']
     gst_number = data['gst_number']
     pan_number = data['pan_number']
@@ -602,6 +604,9 @@ def invoiceslip(request,id):
     ifsc_code = data['ifsc_code']
     admin_state = data['state']
     company_name = data['company_name']
+    bank_branch = data['bank_branch']
+    mail_id = data['mail_id']
+    phone_number = data['phone_number']
 
 
     data = NewInvoice.objects.filter(id = id).values('client_name','invoice_no','invoice_date',).first()
@@ -635,7 +640,14 @@ def invoiceslip(request,id):
         no_of_units_allowed = db_productdetail['no_of_units_allowed']
         cost_per_unit = db_productdetail['cost_per_unit']
         amount = int(no_of_units_allowed) * int(cost_per_unit)
+        sgst = 9  # Example SGST rate
+        cgst = 9  # Example CGST rate
+
+        sgst_amount = round(amount * sgst / 100, 2)  #add the gst indudual products
+        cgst_amount = round(amount * cgst / 100, 2)  #add the gst indudual products
+        gst = sgst_amount + cgst_amount  #add the gst indudual products
         purchase_id = db_productdetail['purchase_id']
+        
         product_name = ""
         data = Product.objects.filter(hsn_no = purchase_id).values('product_name').first()
         if data:
@@ -645,22 +657,32 @@ def invoiceslip(request,id):
             'cost_per_unit': db_productdetail['cost_per_unit'],
             'purchase_id': purchase_id,
             'amount': amount,
+            'gst':gst,   #add the gst indudual products
             "product_name": product_name,
             'count':count
         }
-        subtotal += amount
+        subtotal += amount 
         total = total + amount
         productdetails.append(productdetail)
         count = count + 1
     # import pdb; pdb.set_trace()
-
     
+    from datetime import datetime, timedelta
+
+   # Get the current date
+    invoice_date = datetime.today().date()
+
+    # Calculate the date after 40 days
+    expiration_date = invoice_date + timedelta(days=40)
+
+
+
     sgst, cgst, igst = 0, 0, 0
     if state == admin_state:
         sgst = 9
         cgst = 9
     elif len(cos_gst_number) == 0:
-         igst = 0      
+        igst = 0      
     else:
         igst = 18
 
@@ -669,7 +691,7 @@ def invoiceslip(request,id):
     igst_amount = round(total * igst / 100, 2)
 
     total = round(total + (total * sgst/100) + (total * cgst/100) + (total * igst/100),2)
-
+    amount_in_words = num2words(total, lang='en')
     result = {
         'customer': customer,
         'mail_id': mail_id,
@@ -680,15 +702,18 @@ def invoiceslip(request,id):
         # 'product_name':product_name,
         # 'product_cost':product_cost,
         # 'hsn_no':hsn_no,
+        'mail_id':mail_id,
+        'phone_number':phone_number,
         'bank_name':bank_name,
+        'bank_branch':bank_branch,
         'gst_number':gst_number,
         'pan_number':pan_number,
         'account_number':account_number,
         'ifsc_code':ifsc_code,
         'company_name':company_name,
         'invoice_date':invoice_date,
-        'invoice_no':invoice_no,
-        
+        'expiration_date':expiration_date,
+        'invoice_no':invoice_no,        
         'subtotal':subtotal,
         'sgst':sgst,
         'cgst':cgst,
@@ -697,6 +722,7 @@ def invoiceslip(request,id):
         'cgst_amount':cgst_amount,
         'igst_amount':igst_amount,
         'total':total,
+        'amount_in_words':amount_in_words,
         'state_code': state_code,
         # 'no_of_units_allowed':no_of_units_allowed,
         # 'cost_per_unit':cost_per_unit,
