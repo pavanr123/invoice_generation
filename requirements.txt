@@ -8,3 +8,4 @@ sqlparse==0.4.4
 tzdata==2023.3
 wheel==0.40.0
 django-cors-headers
+num2words
