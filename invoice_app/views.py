@@ -690,7 +690,7 @@ def invoiceslip(request,id):
     expiration_date = invoice_date + timedelta(days=40)
 
 
-    sgst, cgst, igst = 0, 0, 0
+    sgst, cgst, igst = 0, 0, 0 
     if state == admin_state:
         sgst = 9
         cgst = 9
@@ -704,7 +704,7 @@ def invoiceslip(request,id):
     igst_amount = round(total * igst / 100, 2)
 
     total = round(total + (total * sgst/100) + (total * cgst/100) + (total * igst/100),2)
-    amount_in_words = num2words(total, lang='en')
+    amount_in_words = num2words(total, lang='en').title()
     result = {
         'customer': customer,
         'mail_id': mail_id,
