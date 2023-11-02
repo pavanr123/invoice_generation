@@ -666,8 +666,8 @@ def invoiceslip(request,id):
             "product_name": product_name,
             'count':count
         }
-        subtotal += amount 
-        total = total + amount
+        subtotal += total_amount 
+        total = total + total_amount
         productdetails.append(productdetail)
         count = count + 1
     # import pdb; pdb.set_trace()
