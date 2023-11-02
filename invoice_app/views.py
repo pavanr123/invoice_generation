@@ -92,7 +92,7 @@ def addcoustmer(request):
         customer = data['customer']
         mobile_number = data['mobilenumber']
         mail_id = data['mail_id']
-        address = data['address']
+        address = data['customer_address']
         state = data['state']
         city = data['city']
         pin_code = data['pin_code']
@@ -129,7 +129,7 @@ def viewcoustmer(request):
             'customer': customer.customer,
             'mobile_number':customer.mobile_number,
             'mail_id': customer.mail_id,
-            'address': customer.address,
+            'customer_address': customer.address,
             'state': customer.state,
             'city': customer.city,
             'pin_code': customer.pin_code,
@@ -369,8 +369,8 @@ def adminprofile(request):
         data = json.loads(request.body)
         client = data['client']
         gender = data['gender']
-        mail_id = data['mail_id']
-        address = data['address']
+        mail_id = data['email']
+        address = data['admin_address']
         state = data['state']
         phone_number = data['phone_number']
         company_name = data['company']
@@ -402,8 +402,8 @@ def viewadmin(request):
             'admin_id': admin.id,
             'client': admin.client,
             'gender':admin.gender,
-            'mail_id': admin.mail_id,
-            'address': admin.address,
+            'email': admin.mail_id,
+            'admin_address': admin.address,
             'state': admin.state,
             'phone_number': admin.phone_number,
             'company_name': admin.company_name,
@@ -639,15 +639,18 @@ def invoiceslip(request,id):
     for db_productdetail in db_productdetails:
         no_of_units_allowed = db_productdetail['no_of_units_allowed']
         cost_per_unit = db_productdetail['cost_per_unit']
-        amount = int(no_of_units_allowed) * int(cost_per_unit)
-        sgst = 9  # Example SGST rate
-        cgst = 9  # Example CGST rate
+        amount = int(no_of_units_allowed) * int(cost_per_unit) 
+        sgst_rates = 9  # Example SGST rate
+        cgst_rates = 9  # Example CGST rate
 
-        sgst_amount = round(amount * sgst / 100, 2)  #add the gst indudual products
-        cgst_amount = round(amount * cgst / 100, 2)  #add the gst indudual products
-        gst = sgst_amount + cgst_amount  #add the gst indudual products
-        purchase_id = db_productdetail['purchase_id']
+        sgst_amount = round(amount * sgst_rates / 100, 2)  #add the gst indudual products
+        cgst_amount = round(amount * cgst_rates / 100, 2)  #add the gst indudual products
+        # gst = sgst_amount + cgst_amount  #add the gst indudual products
+        gst = sgst_rates + cgst_rates 
         
+        total_amount = amount + gst
+
+        purchase_id = db_productdetail['purchase_id']
         product_name = ""
         data = Product.objects.filter(hsn_no = purchase_id).values('product_name').first()
         if data:
@@ -657,7 +660,9 @@ def invoiceslip(request,id):
             'cost_per_unit': db_productdetail['cost_per_unit'],
             'purchase_id': purchase_id,
             'amount': amount,
-            'gst':gst,   #add the gst indudual products
+            'total_amount':total_amount,
+            'gst': gst,
+            # 'gst':gst,   #add the gst indudual products
             "product_name": product_name,
             'count':count
         }
@@ -674,7 +679,6 @@ def invoiceslip(request,id):
 
     # Calculate the date after 40 days
     expiration_date = invoice_date + timedelta(days=40)
-
 
 
     sgst, cgst, igst = 0, 0, 0
@@ -698,11 +702,12 @@ def invoiceslip(request,id):
         'mobile_number':mobile_number,
         'cos_gst_number':cos_gst_number,
         'state': state,
-        'address':address,
+        'customer_address':address,
         # 'product_name':product_name,
         # 'product_cost':product_cost,
         # 'hsn_no':hsn_no,
-        'mail_id':mail_id,
+        'email':mail_id,
+        'admin_address':address,
         'phone_number':phone_number,
         'bank_name':bank_name,
         'bank_branch':bank_branch,
