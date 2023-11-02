@@ -640,15 +640,24 @@ def invoiceslip(request,id):
         no_of_units_allowed = db_productdetail['no_of_units_allowed']
         cost_per_unit = db_productdetail['cost_per_unit']
         amount = int(no_of_units_allowed) * int(cost_per_unit) 
-        sgst_rates = 9  # Example SGST rate
-        cgst_rates = 9  # Example CGST rate
+        # sgst_rates = 9  # Example SGST rate
+        # cgst_rates = 9  # Example CGST rate
 
-        sgst_amount = round(amount * sgst_rates / 100, 2)  #add the gst indudual products
-        cgst_amount = round(amount * cgst_rates / 100, 2)  #add the gst indudual products
-        # gst = sgst_amount + cgst_amount  #add the gst indudual products
-        gst = sgst_rates + cgst_rates 
+        # sgst_amount = round(amount * sgst_rates / 100, 2)  #add the gst indudual products
+        # cgst_amount = round(amount * cgst_rates / 100, 2)  #add the gst indudual products
+        # # gst = sgst_amount + cgst_amount  #add the gst indudual products
+        # gst = sgst_rates + cgst_rates 
         
-        total_amount = amount + gst
+        # total_amount = amount + gst
+
+
+        # Calculate GST percentage
+        gst_rate = 18  # Example GST rate
+        gst_amount = round(amount * gst_rate / 100, 2)
+
+        # Calculate total amount including GST
+        total_amount = amount + gst_amount
+
 
         purchase_id = db_productdetail['purchase_id']
         product_name = ""
@@ -661,7 +670,7 @@ def invoiceslip(request,id):
             'purchase_id': purchase_id,
             'amount': amount,
             'total_amount':total_amount,
-            'gst': gst,
+            'gst_rate': gst_rate,
             # 'gst':gst,   #add the gst indudual products
             "product_name": product_name,
             'count':count
