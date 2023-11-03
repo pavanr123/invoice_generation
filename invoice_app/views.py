@@ -39,8 +39,11 @@ def otp(request):
         try:
             send_mail(
                 'OTP Verification',
-                'Your OTP: '+ otp,
-                # "usmanbashap@pathbreakertech.com",
+                f'<html><body>'
+                f'<h2>Your Invoice login OTP: {otp}</h2>'
+                f'<p>Thank you for choosing Invoice services. We are glad to assist you with your invoicing needs.</p>'
+                f'<img src="https://pathbreakertech.com/uploads/settings/general_settings_1675415847_112573057.png" alt="Logo">'
+                f'</body></html>',
                 settings.EMAIL_HOST_USER,
                 [email],
                 False,
@@ -607,6 +610,7 @@ def invoiceslip(request,id):
     bank_branch = data['bank_branch']
     mail_id = data['mail_id']
     phone_number = data['phone_number']
+    # address = data['admin_address']
 
 
     data = NewInvoice.objects.filter(id = id).values('client_name','invoice_no','invoice_date',).first()
@@ -648,7 +652,7 @@ def invoiceslip(request,id):
         # # gst = sgst_amount + cgst_amount  #add the gst indudual products
         # gst = sgst_rates + cgst_rates 
         
-        # total_amount = amount + gst
+          # total_amount = amount + gst
 
 
         # Calculate GST percentage
@@ -716,7 +720,7 @@ def invoiceslip(request,id):
         # 'product_cost':product_cost,
         # 'hsn_no':hsn_no,
         'email':mail_id,
-        'admin_address':address,
+        'address':address,
         'phone_number':phone_number,
         'bank_name':bank_name,
         'bank_branch':bank_branch,
