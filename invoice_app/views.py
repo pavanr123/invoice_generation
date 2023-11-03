@@ -37,65 +37,13 @@ def otp(request):
             return HttpResponse("Invalid Credentials")
         otp = str(random.randint(100000, 999999))
         try:
-            message = """
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <style>
-                        body{
-                            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-                        }
-                        .img{
-                            height: 120px;
-                            width: 150px;
-                        }
-                        .cell {
-                            border: 1px solid lightgray;
-                            padding: 10px;
-                        }
-                        .content{
-                            width: 70vw;
-                        }
-                        .table {
-                            border-collapse: collapse;
-                        }
-                        .img-cell {
-                            text-align: center;
-                            vertical-align: top;
-                        }
-                        a {
-                            text-decoration: none;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div>
-                        <p>Sincerely,</p>
-                        <table class="table">
-                            <tr>
-                                <td class="cell img-cell">
-                                    <img class="img" src="https://pathbreakertech.com/uploads/settings/general_settings_1675415847_112573057.png" alt="Logo">" alt="">
-                                </td>
-                                <td class="cell content">
-                                    <h5> INVOICE Team <br> Mobile: +91 9281162593 <br> Website: <a href="#">nersorg.in</a></h5>
-                                    <p>Please enter this OTP on the invoice page to proceed with the verification process.</p>
-                                    <p>Thank you for choosing our services!</p>
-                                    <p>The Invoice Team</p>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </body>
-                </html>
-            """
             send_mail(
-                'OTP Verification',
-                f'{message}<h2>Your Invoice login OTP: {otp}</h2>',
-                settings.EMAIL_HOST_USER,
-                [email],
-                False,
+            'OTP Verification',
+            'Your Invoice login OTP: '+ otp,
+            # "usmanbashap@pathbreakertech.com",
+            settings.EMAIL_HOST_USER,
+            [email],
+            False,
             )
             user = Users.objects.get(email=email)
             otp = Otp(user=user, otp_code=otp)
