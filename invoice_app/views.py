@@ -70,7 +70,7 @@ def dashboard(request):
             # return render(request, 'dashboard.html')
             return HttpResponse("OTP verified successfully")
         else:
-            return HttpResponse('Invalid OTP')
+            return HttpResponse('Invalid OTP',status=400)
         
     total_rows_count = NewInvoice.objects.all().count()
     total_cus = Customer.objects.all().count()
