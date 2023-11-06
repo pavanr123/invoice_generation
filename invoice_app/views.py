@@ -34,7 +34,7 @@ def otp(request):
             is_valid = True
             email = email = Users.objects.filter(username=email).values('email').first() 
         else:
-            return HttpResponse("Invalid Credentials")
+            return HttpResponse("Invalid Credentials" ,status=400 )
         otp = str(random.randint(100000, 999999))
         try:
             send_mail(
